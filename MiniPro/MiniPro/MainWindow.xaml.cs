@@ -22,6 +22,7 @@ namespace MiniPro
     {
         public MainWindow()
         {
+            MessageBox.Show("Hello? Is this thing on?");
             InitializeComponent();
         }
     }
