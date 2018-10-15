@@ -51,6 +51,5 @@ namespace MiniPro
                 MessageBox.Show("distance = " + output + "Miles");
             }
         }
-
     }
 }
