@@ -15,38 +15,64 @@ using System.Windows.Shapes;
 
 namespace MiniPro
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        double lon1;
+        bool isLon1;
+        double lat1;
+        bool isLat1;
+        double lon2;
+        bool isLon2;
+        double lat2;
+        bool isLat2;
+        double r;
+        double val1;
+        double val2;
+        double val3;
+        double val4;
+        double valA;
+        double valC;
+        double distance;
+        bool isDistance;
+        double output;
+
         public MainWindow()
         {
             InitializeComponent();
         }
         private void BtnLaunch_Click(object sender, RoutedEventArgs e)
         {
-            double lon1 = double.Parse(TxtLon1.Text);
-            double lon2 = double.Parse(TxtLon2.Text);
-            double lat1 = double.Parse(txtLat1.Text);
-            double lat2 = double.Parse(txtLat2.Text);
-            double R = 3958.756;
-            double val1 = (lat1 * (Math.PI / 180));
-            double val2 = (lat2 * (Math.PI / 180));
-            double val3 = ((lat2 - lat1) * (Math.PI / 180));
-            double val4 = ((lon2 - lon1) * (Math.PI / 180));
-            double vala = Math.Sin(val3 / 2) * Math.Sin(val3 / 2) + Math.Cos(val1) * Math.Cos(val2) * (Math.Sin(val4 / 2) * Math.Sin(val4 / 2));
-            double valc = 2 * Math.Atan2(Math.Sqrt(vala), Math.Sqrt(1 - vala));
+            // Haversine. Needs own class
+            isLon1 = double.TryParse(txtLon1.Text, out lon1);
+            isLat1 = double.TryParse(txtLat1.Text, out lat1);
+            isLon2 = double.TryParse(txtLon2.Text, out lon2);
+            isLat2 = double.TryParse(txtLat2.Text, out lat2);
+            isDistance = double.TryParse(txtdistance.Text, out distance);
 
-            double distance = valc * R;
-            double output = Math.Round(distance, 3);
-            if (distance > double.Parse(txtdistance.Text))
+            r = 3958.756;
+            val1 = (lat1 * (Math.PI / 180));
+            val2 = (lat2 * (Math.PI / 180));
+            val3 = ((lat2 - lat1) * (Math.PI / 180));
+            val4 = ((lon2 - lon1) * (Math.PI / 180));
+            valA = Math.Sin(val3 / 2) * Math.Sin(val3 / 2) + Math.Cos(val1) * Math.Cos(val2) * (Math.Sin(val4 / 2) * Math.Sin(val4 / 2));
+            valC = 2 * Math.Atan2(Math.Sqrt(valA), Math.Sqrt(1 - valA));
+            distance = valC * r;
+            output = Math.Round(distance, 3);
+
+            if (!isLon1 || !isLat1 || !isLon2 || !isLat2 || !isDistance)
             {
-                MessageBox.Show("Distance greater than  " + txtdistance.Text + " MILES." + "\n" + "distance = " + output + " Miles");
+                MessageBox.Show("One or more Lon / Lat / Distance values is invalid");
             }
             else
             {
-                MessageBox.Show("Distance within acceptable distance " + txtdistance.Text + " MILES." + "\n" + "distance = " + output + " Miles");
+                if (distance > double.Parse(txtdistance.Text))
+                {
+                    MessageBox.Show("Distance greater than  " + txtdistance.Text + " MILES." + "\n" + "distance = " + output + " Miles");
+                }
+                else
+                {
+                    MessageBox.Show("Distance within acceptable distance " + txtdistance.Text + " MILES." + "\n" + "distance = " + output + " Miles");
+                }
             }
         }
 
