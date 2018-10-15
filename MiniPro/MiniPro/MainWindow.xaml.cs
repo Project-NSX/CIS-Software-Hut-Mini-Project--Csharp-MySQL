@@ -42,11 +42,13 @@ namespace MiniPro
             double output = Math.Round(distance, 3);
             if (distance > double.Parse(txtdistance.Text))
             {
-                MessageBox.Show("distance greater than " + txtdistance.Text + "MILES" + "\n" + "distance = " + output + "Miles");
+                MessageBox.Show("distance greater than " + txtdistance.Text + "MILES" );
+                MessageBox.Show(");
             }
             else
             {
-                MessageBox.Show("distance within acceptable distance " + txtdistance.Text + "MILES" +"\n" + "distance = " + output + "Miles");
+                MessageBox.Show("distance within acceptable distance " + txtdistance.Text + "MILES");
+                MessageBox.Show("distance = " + output + "Miles");
             }
         }
 
