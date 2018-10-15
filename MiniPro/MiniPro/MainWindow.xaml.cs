@@ -17,6 +17,7 @@ namespace MiniPro
 {
     public partial class MainWindow : Window
     {
+        // Declarations
         double lon1;
         bool isLon1;
         double lat1;
@@ -40,6 +41,7 @@ namespace MiniPro
         {
             InitializeComponent();
         }
+        // Button Method
         private void BtnLaunch_Click(object sender, RoutedEventArgs e)
         {
             // Longitude, Latitude & Distance Assignment
