@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button x:Name="BtnLaunch" Content="Run" HorizontalAlignment="Left" Height="59" Margin="128,91,0,0" VerticalAlignment="Top" Width="179" Click="BtnLaunch_Click"/>
+        <TextBox x:Name="txtLat1" HorizontalAlignment="Left" Height="33" Margin="128,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
+        <TextBox x:Name="TxtLon1" HorizontalAlignment="Left" Height="33" Margin="360,176,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147"/>
+        <TextBox x:Name="txtLat2" HorizontalAlignment="Left" Height="32" Margin="128,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
+        <TextBox x:Name="TxtLon2" HorizontalAlignment="Left" Height="32" Margin="360,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147"/>
+        <Label Content="latitude" HorizontalAlignment="Left" Height="33" Margin="65,176,0,0" VerticalAlignment="Top" Width="58"/>
+        <Label Content="longitude" HorizontalAlignment="Left" Height="33" Margin="280,176,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="txtdistance" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" VerticalAlignment="Top" Width="27" Margin="546,176,0,0"/>
+        <Label Content="Write acceptable  distance" HorizontalAlignment="Left" Height="47" Margin="531,228,0,0" VerticalAlignment="Top" Width="162"/>
+        <TextBox HorizontalAlignment="Left" Height="20" Margin="578,176,0,0" TextWrapping="Wrap" Text="MILES" VerticalAlignment="Top" Width="54"/>
+
     </Grid>
 </Window>
