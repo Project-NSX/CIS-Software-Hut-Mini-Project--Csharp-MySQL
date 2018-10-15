@@ -42,13 +42,15 @@ namespace MiniPro
         }
         private void BtnLaunch_Click(object sender, RoutedEventArgs e)
         {
-            // Haversine. Needs own class
+            // Longitude, Latitude & Distance Assignment
+            // Sets bool to false if text box cannot be parsed. assigns values from text boxes if they can.
             isLon1 = double.TryParse(txtLon1.Text, out lon1);
             isLat1 = double.TryParse(txtLat1.Text, out lat1);
             isLon2 = double.TryParse(txtLon2.Text, out lon2);
             isLat2 = double.TryParse(txtLat2.Text, out lat2);
             isDistance = double.TryParse(txtdistance.Text, out distance);
 
+            // Haversine. Needs own class
             r = 3958.756;
             val1 = (lat1 * (Math.PI / 180));
             val2 = (lat2 * (Math.PI / 180));
@@ -59,19 +61,21 @@ namespace MiniPro
             distance = valC * r;
             output = Math.Round(distance, 3);
 
+            // If any values cannot be parsed, show error message
             if (!isLon1 || !isLat1 || !isLon2 || !isLat2 || !isDistance)
             {
                 MessageBox.Show("One or more Lon / Lat / Distance values is invalid");
             }
+            // Else display calculation results
             else
             {
                 if (distance > double.Parse(txtdistance.Text))
                 {
-                    MessageBox.Show("Distance greater than  " + txtdistance.Text + " MILES." + "\n" + "distance = " + output + " Miles");
+                    MessageBox.Show("Distance greater than  " + txtdistance.Text + " Miles." + "\n" + "distance = " + output + " Miles");
                 }
                 else
                 {
-                    MessageBox.Show("Distance within acceptable distance " + txtdistance.Text + " MILES." + "\n" + "distance = " + output + " Miles");
+                    MessageBox.Show("Distance within acceptable distance " + txtdistance.Text + " Miles." + "\n" + "distance = " + output + " Miles");
                 }
             }
         }
