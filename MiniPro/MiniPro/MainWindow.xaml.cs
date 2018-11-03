@@ -14,14 +14,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace MiniPro
 {
     public partial class MainWindow : Window
     {
-        SqlConnection sqlConnection;
         // Declarations
         double lon1;
         bool isLon1;
@@ -41,14 +40,17 @@ namespace MiniPro
         double distance;
         bool isDistance;
         double output;
+        MySqlConnection conn;
+        string commandString;
+        MySqlDataAdapter adapter;
+        string postcode;
+        double longitude;
+        double latitude;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //string connectionString = ConfigurationManager.ConnectionStrings["server = localhost; user id = root; persistsecurityinfo = True; database = mini_project; allowuservariables = True"].ConnectionString;
-            //sqlConnection = new SqlConnection(connectionString);
-            
         }
         private void Haversine()
         {
@@ -95,10 +97,76 @@ namespace MiniPro
             }
         }
 
+        // Postcode button Click
         private void BtnPostcode_Click(object sender, RoutedEventArgs e)
         {
-   
 
+
+            // Assigning Connection String
+            string connectionString = "server=localhost;user id=root;password=MyNewPass;database=mini_project";
+            // Link connection to connection string
+            conn = new MySqlConnection(connectionString);
+
+            
+            // Not too sure....
+            MySqlCommand command = conn.CreateCommand();
+
+            try
+            {
+
+                //Open connecting using conn.
+                conn.Open();
+                
+                // Assign postcode string from postcodeBox
+                postcode = postcodeBox.Text;
+
+                
+                // Assign command string
+                commandString = "SELECT longitude, latitude FROM postcodes WHERE postcode='" + postcode + "';";
+
+                MessageBox.Show("Connection Established! \nRunning query: " + commandString + "\n");
+
+                //Assign Command using the commandString declared above
+                command.CommandText = commandString;
+
+                // Declare reader using command... not sure why this works like this
+                // THIS READER IS PRINTING LONG AND LAT OF POSTCODE ENTERED TO CONSOLE
+                MySqlDataReader myReader = command.ExecuteReader();
+
+                //Loop through columns and print to console
+                while (myReader.Read())
+                {
+                    // Attempt to save columns as variables
+                    double latitude = (double)myReader["latitude"];
+                    double longitude = (double)myReader["longitude"];
+                    //Print results to console
+                    string row = "";
+                    for (int i = 0; i < myReader.FieldCount; i++)
+                        row += myReader.GetValue(i).ToString() + ", ";
+                    Console.WriteLine(row);
+ 
+                }
+ 
+                Console.WriteLine("Closing Reader...");
+                // Close Reader
+                myReader.Close();
+                MessageBox.Show(latitude.ToString() + " " + longitude.ToString());
+            }
+
+            catch (MySqlException ex)
+            {
+                Console.WriteLine("Error: {0}", ex.ToString());
+            }
+
+            finally
+            {
+                Console.WriteLine("Closing Connection...");
+                if (conn != null)
+                {
+                    
+                    conn.Close();
+                }
+            }
 
         }
 
