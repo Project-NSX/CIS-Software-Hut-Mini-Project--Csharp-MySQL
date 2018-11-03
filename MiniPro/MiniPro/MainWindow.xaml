@@ -18,6 +18,10 @@
         <Label Content="Radius (in Miles)&#xD;&#xA;" HorizontalAlignment="Left" Margin="622,235,0,0" VerticalAlignment="Top" Height="26"/>
         <Label Content="Latitude 2" HorizontalAlignment="Left" Height="33" Margin="47,271,0,0" VerticalAlignment="Top" Width="67" RenderTransformOrigin="0.489,0.354"/>
         <Label Content="Longitude 2" HorizontalAlignment="Left" Height="33" Margin="295,270,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox Name="postcodeTxt" HorizontalAlignment="Left" Height="33" Margin="128,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
+        <Label Content="Postcode (Test)&#xA;" HorizontalAlignment="Left" Height="33" Margin="23,335,0,0" VerticalAlignment="Top" Width="91"/>
+        <Button x:Name="BtnPostcode" Content="Run" HorizontalAlignment="Left" Height="35" Margin="308,333,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
+
 
     </Grid>
 </Window>

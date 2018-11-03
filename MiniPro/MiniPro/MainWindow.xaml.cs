@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MiniPro
 {
     public partial class MainWindow : Window
     {
+        SqlConnection sqlConnection;
         // Declarations
         double lon1;
         bool isLon1;
@@ -40,6 +45,22 @@ namespace MiniPro
         public MainWindow()
         {
             InitializeComponent();
+
+            //string connectionString = ConfigurationManager.ConnectionStrings["server = localhost; user id = root; persistsecurityinfo = True; database = mini_project; allowuservariables = True"].ConnectionString;
+            //sqlConnection = new SqlConnection(connectionString);
+            
+        }
+        private void Haversine()
+        {
+            r = 3958.756;
+            val1 = (lat1 * (Math.PI / 180));
+            val2 = (lat2 * (Math.PI / 180));
+            val3 = ((lat2 - lat1) * (Math.PI / 180));
+            val4 = ((lon2 - lon1) * (Math.PI / 180));
+            valA = Math.Sin(val3 / 2) * Math.Sin(val3 / 2) + Math.Cos(val1) * Math.Cos(val2) * (Math.Sin(val4 / 2) * Math.Sin(val4 / 2));
+            valC = 2 * Math.Atan2(Math.Sqrt(valA), Math.Sqrt(1 - valA));
+            distance = valC * r;
+            output = Math.Round(distance, 3);
         }
         // Button Method
         private void BtnLaunch_Click(object sender, RoutedEventArgs e)
@@ -52,16 +73,8 @@ namespace MiniPro
             isLat2 = double.TryParse(txtLat2.Text, out lat2);
             isDistance = double.TryParse(txtdistance.Text, out distance);
 
-            // Haversine. Needs own class
-            r = 3958.756;
-            val1 = (lat1 * (Math.PI / 180));
-            val2 = (lat2 * (Math.PI / 180));
-            val3 = ((lat2 - lat1) * (Math.PI / 180));
-            val4 = ((lon2 - lon1) * (Math.PI / 180));
-            valA = Math.Sin(val3 / 2) * Math.Sin(val3 / 2) + Math.Cos(val1) * Math.Cos(val2) * (Math.Sin(val4 / 2) * Math.Sin(val4 / 2));
-            valC = 2 * Math.Atan2(Math.Sqrt(valA), Math.Sqrt(1 - valA));
-            distance = valC * r;
-            output = Math.Round(distance, 3);
+            // Call Haversine
+            Haversine();
 
             // If any values cannot be parsed, show error message
             if (!isLon1 || !isLat1 || !isLon2 || !isLat2 || !isDistance)
@@ -80,6 +93,13 @@ namespace MiniPro
                     MessageBox.Show("Distance within acceptable distance " + txtdistance.Text + " Miles." + "\n" + "distance = " + output + " Miles");
                 }
             }
+        }
+
+        private void BtnPostcode_Click(object sender, RoutedEventArgs e)
+        {
+   
+
+
         }
 
     }
