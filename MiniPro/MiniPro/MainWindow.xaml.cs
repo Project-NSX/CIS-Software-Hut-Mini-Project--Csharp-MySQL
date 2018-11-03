@@ -17,6 +17,10 @@ using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
 
+// NEXT STEPS:
+// Figure out how to measure 1 mile using haversine. Convert to 2 long and 2 lat values?
+// Figure out query SELECT postcode WHERE longitude BETWEEN (xxxxx AND xxxxx) AND latitude BETWEEN (xxxxx AND xxxxx)?
+// Sort results by distance ?????
 namespace MiniPro
 {
     public partial class MainWindow : Window
