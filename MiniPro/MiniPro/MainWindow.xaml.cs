@@ -101,13 +101,11 @@ namespace MiniPro
         private void BtnPostcode_Click(object sender, RoutedEventArgs e)
         {
 
-
             // Assigning Connection String
             string connectionString = "server=localhost;user id=root;password=MyNewPass;database=mini_project";
             // Link connection to connection string
             conn = new MySqlConnection(connectionString);
 
-            // Not too sure....
             MySqlCommand command = conn.CreateCommand();
 
             try
@@ -119,11 +117,8 @@ namespace MiniPro
                 // Assign postcode string from postcodeBox
                 postcode = postcodeBox.Text;
 
-                
                 // Assign command string
                 commandString = "SELECT longitude, latitude FROM postcodes WHERE postcode='" + postcode + "';";
-
-                MessageBox.Show("Connection Established! \nRunning query: " + commandString + "\n");
 
                 //Assign Command using the commandString declared above
                 command.CommandText = commandString;
