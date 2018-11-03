@@ -107,7 +107,6 @@ namespace MiniPro
             // Link connection to connection string
             conn = new MySqlConnection(connectionString);
 
-            
             // Not too sure....
             MySqlCommand command = conn.CreateCommand();
 
@@ -129,28 +128,18 @@ namespace MiniPro
                 //Assign Command using the commandString declared above
                 command.CommandText = commandString;
 
-                // Declare reader using command... not sure why this works like this
-                // THIS READER IS PRINTING LONG AND LAT OF POSTCODE ENTERED TO CONSOLE
+                // Declare reader using command...
                 MySqlDataReader myReader = command.ExecuteReader();
-
-                //Loop through columns and print to console
-                while (myReader.Read())
+                // If reader is running, assign long and lat to local variables
+                if (myReader.Read())
                 {
-                    // Attempt to save columns as variables
-                    double latitude = (double)myReader["latitude"];
-                    double longitude = (double)myReader["longitude"];
-                    //Print results to console
-                    string row = "";
-                    for (int i = 0; i < myReader.FieldCount; i++)
-                        row += myReader.GetValue(i).ToString() + ", ";
-                    Console.WriteLine(row);
- 
+                    longitude = (double)myReader[0];
+                    latitude = (double)myReader[1];
                 }
- 
-                Console.WriteLine("Closing Reader...");
+                // Print long and lat to messagebox
+                MessageBox.Show("Longitude: " + longitude.ToString() + " Latitude: " + latitude.ToString());
                 // Close Reader
-                myReader.Close();
-                MessageBox.Show(latitude.ToString() + " " + longitude.ToString());
+                myReader.Close(); 
             }
 
             catch (MySqlException ex)
@@ -163,7 +152,6 @@ namespace MiniPro
                 Console.WriteLine("Closing Connection...");
                 if (conn != null)
                 {
-                    
                     conn.Close();
                 }
             }
