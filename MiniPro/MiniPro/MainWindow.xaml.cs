@@ -78,7 +78,7 @@ namespace MiniPro
             isLon2 = double.TryParse(txtLon2.Text, out lon2);
             isLat2 = double.TryParse(txtLat2.Text, out lat2);
             isDistance = double.TryParse(txtdistance.Text, out distance);
-
+             
             // Call Haversine
             Haversine();
 
