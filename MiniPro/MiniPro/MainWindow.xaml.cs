@@ -119,7 +119,7 @@ namespace MiniPro
                 conn.Open();
                 
                 // Assign postcode string from postcodeBox
-                // This needs error handling.. somehow xD
+                // This needs error handling.. somehow 
                 postcode = postcodeBox.Text;
 
                 // Assign command string
