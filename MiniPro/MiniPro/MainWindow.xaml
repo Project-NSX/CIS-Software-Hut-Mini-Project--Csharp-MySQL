@@ -7,11 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox Name="postcodeBox" HorizontalAlignment="Left" Height="33" Margin="128,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
-        <Label Content="Postcode" HorizontalAlignment="Left" Height="33" Margin="32,335,0,0" VerticalAlignment="Top" Width="69"/>
-        <Button x:Name="BtnPostcode" Content="Run" HorizontalAlignment="Left" Height="35" Margin="308,333,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
-        <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="267" Margin="32,28,0,0" VerticalAlignment="Top" Width="726"/>
-        <DataGrid Name="dataGrid2" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="315" Margin="458,333,0,0"/>
+        <TextBox Name="postcodeBox" HorizontalAlignment="Left" Height="24" Margin="79,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
+        <Label Content="Postcode" HorizontalAlignment="Left" Height="24" Margin="10,297,0,0" VerticalAlignment="Top" Width="69"/>
+        <Button x:Name="BtnPostcode" Content="Run" HorizontalAlignment="Left" Height="35" Margin="253,297,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
+        <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="255" Margin="43,28,0,0" VerticalAlignment="Top" Width="706"/>
+        <DataGrid Name="dataGrid2" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="67" VerticalAlignment="Top" Width="225" Margin="524,297,0,0"/>
+        <Slider Maximum="100" TickPlacement="BottomRight" TickFrequency="5"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" Margin="43,376,0,0" VerticalAlignment="Top" Width="421"/>
+        <Label Content="Distance" HorizontalAlignment="Left" Margin="203,345,0,0" VerticalAlignment="Top"/>
 
 
     </Grid>
