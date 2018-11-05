@@ -17,10 +17,6 @@ using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-// NEXT STEPS:
-// Figure out how to measure 1 mile using haversine. Convert to 2 long and 2 lat values?
-// Figure out query SELECT postcode WHERE longitude BETWEEN (xxxxx AND xxxxx) AND latitude BETWEEN (xxxxx AND xxxxx)?
-// Sort results by distance ?????
 namespace MiniPro
 {
     public partial class MainWindow : Window
@@ -37,7 +33,6 @@ namespace MiniPro
         public MainWindow()
         {
             InitializeComponent();
-
         }
        
 
@@ -70,6 +65,7 @@ namespace MiniPro
 
                 // Declare reader using command...
                 MySqlDataReader myReader = command.ExecuteReader();
+
                 // If reader is running, assign long and lat to local variables
                 if (myReader.Read())
                 {
@@ -77,26 +73,25 @@ namespace MiniPro
                     latitude = (double)myReader[1];
                 }
 
-
                 // Close Reader
                 myReader.Close();
 
-                //Open Connection - Is this needed? try and get this done without opening this conn
-                MySqlConnection connection = new MySqlConnection(connectionString);
+                // Fill dataTable2 with data from query               
                 MySqlCommand cmdSel2 = new MySqlCommand(commandString, conn);
                 DataTable dt2 = new DataTable();
                 MySqlDataAdapter da2 = new MySqlDataAdapter(cmdSel2);
                 da2.Fill(dt2);
                 dataGrid2.DataContext = dt2;
-                // Take long and lat, get all values within X miles.
 
-                // User entered postcode query
-                commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < 50 ORDER BY 'distance miles' ASC;";
+
+                // Query string for user entered postcode
+                commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < 30 ORDER BY distance ASC;";
                 // Hard coded  long and lat query
-                //commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(52.9264910875289) ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(-4.56893553583337) ) + sin( radians(52.9264910875289) ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < 27 ORDER BY 'distance miles' ASC; ";
+                //commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(52.9264910875289) ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(-4.56893553583337) ) + sin( radians(52.9264910875289) ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < 27 ORDER BY miles ASC; ";
 
-
+                // Set command using commandString2
                 command.CommandText = commandString2;
+                // Open new reader
                 MySqlDataReader myReader2 = command.ExecuteReader();
                 
                 // Print Results to Console                
@@ -111,25 +106,24 @@ namespace MiniPro
                 // Close reader
                 myReader2.Close();
 
-                // Push results to datgrid
-  
+                // Push results to datgrid (LONG + LAT)
                 MySqlCommand cmdSel = new MySqlCommand(commandString2, conn);
                 DataTable dt = new DataTable();
                 MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
                 da.Fill(dt);
-                dataGrid1.DataContext = dt;
-                // Close connection...
-                connection.Close();
+                dataGrid1.DataContext = dt;         
                 
 
             }
-
+            
+            //MySQL Error Handling
             catch (MySqlException ex)
             {
                 Console.Error.WriteLine("Error: {0}", ex.ToString());
                 conn = null;
             }
 
+            // Close MySQL Connection
             finally
             {
                 Console.WriteLine("Closing Connection...");
