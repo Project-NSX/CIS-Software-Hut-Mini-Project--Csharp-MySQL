@@ -46,10 +46,18 @@ namespace MiniPro
         double output;
         MySqlConnection conn;
         string commandString;
+        string commandString2;
         MySqlDataAdapter adapter;
         string postcode;
         double longitude;
         double latitude;
+        string serviceType;
+        string serviceName;
+        string street;
+        string city;
+        string postcode2;
+        string telno;
+        string distance2;
 
         public MainWindow()
         {
@@ -137,9 +145,13 @@ namespace MiniPro
                     latitude = (double)myReader[1];
                 }
                 // Print long and lat to messagebox
-                MessageBox.Show("Longitude: " + longitude.ToString() + " Latitude: " + latitude.ToString());
+                //MessageBox.Show("Longitude: " + longitude.ToString() + " Latitude: " + latitude.ToString());
                 // Close Reader
-                myReader.Close(); 
+                myReader.Close();
+
+                commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS 'distance miles' FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING 'distance miles' < 35 ORDER BY 'distance miles' ASC;";
+
+                MessageBox.Show("Distance:" + distance.ToString());
             }
 
             catch (MySqlException ex)
