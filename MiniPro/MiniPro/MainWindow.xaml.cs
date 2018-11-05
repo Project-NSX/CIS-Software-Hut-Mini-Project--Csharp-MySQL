@@ -26,88 +26,20 @@ namespace MiniPro
     public partial class MainWindow : Window
     {
         // Declarations
-        double lon1;
-        bool isLon1;
-        double lat1;
-        bool isLat1;
-        double lon2;
-        bool isLon2;
-        double lat2;
-        bool isLat2;
-        double r;
-        double val1;
-        double val2;
-        double val3;
-        double val4;
-        double valA;
-        double valC;
-        double distance;
-        bool isDistance;
-        double output;
         MySqlConnection conn;
         string commandString;
-        string commandString2;
         MySqlDataAdapter adapter;
         string postcode;
         double longitude;
         double latitude;
-        string serviceType;
-        string serviceName;
-        string street;
-        string city;
-        string postcode2;
-        string telno;
-        string distance2;
+        string commandString2;
 
         public MainWindow()
         {
             InitializeComponent();
 
         }
-        private void Haversine()
-        {
-            r = 3958.756;
-            val1 = (lat1 * (Math.PI / 180));
-            val2 = (lat2 * (Math.PI / 180));
-            val3 = ((lat2 - lat1) * (Math.PI / 180));
-            val4 = ((lon2 - lon1) * (Math.PI / 180));
-            valA = Math.Sin(val3 / 2) * Math.Sin(val3 / 2) + Math.Cos(val1) * Math.Cos(val2) * (Math.Sin(val4 / 2) * Math.Sin(val4 / 2));
-            valC = 2 * Math.Atan2(Math.Sqrt(valA), Math.Sqrt(1 - valA));
-            distance = valC * r;
-            output = Math.Round(distance, 3);
-        }
-        // Button Method
-        private void BtnLaunch_Click(object sender, RoutedEventArgs e)
-        {
-            // Longitude, Latitude & Distance Assignment
-            // Sets bool to false if text box cannot be parsed. assigns values from text boxes if they can.
-            isLon1 = double.TryParse(txtLon1.Text, out lon1);
-            isLat1 = double.TryParse(txtLat1.Text, out lat1);
-            isLon2 = double.TryParse(txtLon2.Text, out lon2);
-            isLat2 = double.TryParse(txtLat2.Text, out lat2);
-            isDistance = double.TryParse(txtdistance.Text, out distance);
-             
-            // Call Haversine
-            Haversine();
-
-            // If any values cannot be parsed, show error message
-            if (!isLon1 || !isLat1 || !isLon2 || !isLat2 || !isDistance)
-            {
-                MessageBox.Show("One or more Lon / Lat / Distance values is invalid");
-            }
-            // Else display calculation results
-            else
-            {
-                if (distance > double.Parse(txtdistance.Text))
-                {
-                    MessageBox.Show("Distance greater than  " + txtdistance.Text + " Miles." + "\n" + "distance = " + output + " Miles");
-                }
-                else
-                {
-                    MessageBox.Show("Distance within acceptable distance " + txtdistance.Text + " Miles." + "\n" + "distance = " + output + " Miles");
-                }
-            }
-        }
+       
 
         // Postcode button Click
         private void BtnPostcode_Click(object sender, RoutedEventArgs e)
@@ -127,10 +59,10 @@ namespace MiniPro
                 conn.Open();
                 
                 // Assign postcode string from postcodeBox
-                // This needs error handling.. somehow 
+                // This needs error handling.. somehow xD
                 postcode = postcodeBox.Text;
 
-                // Assign command string
+                // Assign command string - Take postcode, get long and lat
                 commandString = "SELECT longitude, latitude FROM postcodes WHERE postcode='" + postcode + "';";
 
                 //Assign Command using the commandString declared above
@@ -144,19 +76,58 @@ namespace MiniPro
                     longitude = (double)myReader[0];
                     latitude = (double)myReader[1];
                 }
-                // Print long and lat to messagebox
-                //MessageBox.Show("Longitude: " + longitude.ToString() + " Latitude: " + latitude.ToString());
+
+
                 // Close Reader
                 myReader.Close();
 
-                commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS 'distance miles' FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING 'distance miles' < 35 ORDER BY 'distance miles' ASC;";
+                //Open Connection - Is this needed? try and get this done without opening this conn
+                MySqlConnection connection = new MySqlConnection(connectionString);
+                MySqlCommand cmdSel2 = new MySqlCommand(commandString, conn);
+                DataTable dt2 = new DataTable();
+                MySqlDataAdapter da2 = new MySqlDataAdapter(cmdSel2);
+                da2.Fill(dt2);
+                dataGrid2.DataContext = dt2;
+                // Take long and lat, get all values within X miles.
 
-                MessageBox.Show("Distance:" + distance.ToString());
+                // User entered postcode query
+                commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < 50 ORDER BY 'distance miles' ASC;";
+                // Hard coded  long and lat query
+                //commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(52.9264910875289) ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(-4.56893553583337) ) + sin( radians(52.9264910875289) ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < 27 ORDER BY 'distance miles' ASC; ";
+
+
+                command.CommandText = commandString2;
+                MySqlDataReader myReader2 = command.ExecuteReader();
+                
+                // Print Results to Console                
+                while (myReader2.Read())
+                {
+                    string row = "";
+                    for (int i = 0; i < myReader2.FieldCount; i++)
+                        row += myReader2.GetValue(i).ToString() + ", ";
+                    Console.WriteLine(row);
+                }
+
+                // Close reader
+                myReader2.Close();
+
+                // Push results to datgrid
+  
+                MySqlCommand cmdSel = new MySqlCommand(commandString2, conn);
+                DataTable dt = new DataTable();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
+                da.Fill(dt);
+                dataGrid1.DataContext = dt;
+                // Close connection...
+                connection.Close();
+                
+
             }
 
             catch (MySqlException ex)
             {
-                Console.WriteLine("Error: {0}", ex.ToString());
+                Console.Error.WriteLine("Error: {0}", ex.ToString());
+                conn = null;
             }
 
             finally
@@ -167,7 +138,6 @@ namespace MiniPro
                     conn.Close();
                 }
             }
-
         }
 
     }

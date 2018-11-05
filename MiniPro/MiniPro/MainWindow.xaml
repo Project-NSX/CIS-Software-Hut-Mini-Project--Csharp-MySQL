@@ -7,21 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Name="BtnLaunch" Content="Run" HorizontalAlignment="Left" Height="59" Margin="23,10,0,0" VerticalAlignment="Top" Width="179" Click="BtnLaunch_Click"/>
-        <TextBox Name="txtLat1" HorizontalAlignment="Left" Height="33" Margin="91,86,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
-        <TextBox Name="txtLon1" HorizontalAlignment="Left" Height="33" Margin="338,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147"/>
-        <TextBox Name="txtLat2" HorizontalAlignment="Left" Height="32" Margin="91,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
-        <TextBox Name="txtLon2" HorizontalAlignment="Left" Height="32" Margin="338,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147"/>
-        <Label Content="Latitude 1&#xD;&#xA;" HorizontalAlignment="Left" Height="33" Margin="12,86,0,0" VerticalAlignment="Top" Width="65"/>
-        <Label Content="Longitude 1" HorizontalAlignment="Left" Height="33" Margin="258,86,0,0" VerticalAlignment="Top" Width="75"/>
-        <TextBox Name="txtdistance" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="66" Margin="218,28,0,0"/>
-        <Label Content="Radius (in Miles)&#xD;&#xA;" HorizontalAlignment="Left" Margin="295,27,0,0" VerticalAlignment="Top" Height="26"/>
-        <Label Content="Latitude 2" HorizontalAlignment="Left" Height="33" Margin="10,166,0,0" VerticalAlignment="Top" Width="67" RenderTransformOrigin="0.489,0.354"/>
-        <Label Content="Longitude 2" HorizontalAlignment="Left" Height="33" Margin="258,165,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBox Name="postcodeBox" HorizontalAlignment="Left" Height="33" Margin="128,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
-        <Label Content="Postcode (Test)&#xA;" HorizontalAlignment="Left" Height="33" Margin="23,335,0,0" VerticalAlignment="Top" Width="91"/>
+        <Label Content="Postcode" HorizontalAlignment="Left" Height="33" Margin="32,335,0,0" VerticalAlignment="Top" Width="69"/>
         <Button x:Name="BtnPostcode" Content="Run" HorizontalAlignment="Left" Height="35" Margin="308,333,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
-        <DataGrid Name="dataTable" HorizontalAlignment="Left" Height="355" Margin="507,28,0,0" VerticalAlignment="Top" Width="251"/>
+        <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="267" Margin="32,28,0,0" VerticalAlignment="Top" Width="726"/>
+        <DataGrid Name="dataGrid2" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="62" VerticalAlignment="Top" Width="315" Margin="458,333,0,0"/>
 
 
     </Grid>
