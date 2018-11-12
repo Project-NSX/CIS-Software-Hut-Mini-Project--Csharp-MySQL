@@ -77,18 +77,9 @@ namespace MiniPro
                 // Close Reader
                 myReader.Close();
 
-                // Fill dataTable2 with data from query               
-                MySqlCommand cmdSel2 = new MySqlCommand(commandString, conn);
-                DataTable dt2 = new DataTable();
-                MySqlDataAdapter da2 = new MySqlDataAdapter(cmdSel2);
-                da2.Fill(dt2);
-                dataGrid2.DataContext = dt2;
-
 
                 // Query string for user entered postcode
                 commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < " + dst + " ORDER BY distance ASC;";
-                // Hard coded  long and lat query
-                //commandString2 = "SELECT s.*, FORMAT(( 3958.756 * acos( cos( radians(52.9264910875289) ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(-4.56893553583337) ) + sin( radians(52.9264910875289) ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < 27 ORDER BY miles ASC; ";
 
                 // Set command using commandString2
                 command.CommandText = commandString2;
@@ -139,5 +130,7 @@ namespace MiniPro
         {
             dst = Convert.ToInt32(e.NewValue);        
         }
+
+        
     }
 }
