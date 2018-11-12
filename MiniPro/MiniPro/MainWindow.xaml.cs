@@ -21,6 +21,14 @@ namespace MiniPro
 {
     public partial class MainWindow : Window
     {
+        // TODO
+        // Error Checking for postcode
+            // Text box restrictions
+            // poscode specifications stuff
+        // Checkboxes
+        // Age
+        // 
+
         // Declarations
         MySqlConnection conn;
         string commandString;
