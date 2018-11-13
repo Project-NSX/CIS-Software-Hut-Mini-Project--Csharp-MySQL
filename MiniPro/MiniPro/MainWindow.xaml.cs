@@ -24,7 +24,9 @@ namespace MiniPro
         // TODO
         // Error Checking for postcode
             // Text box restrictions
-            // poscode specifications stuff
+            // postcode specifications stuff
+            // Change method names and value's to Upper case first character
+            // Change into OOP
         // Checkboxes
         // Age
         // 
@@ -94,6 +96,7 @@ namespace MiniPro
                 // Open new reader
                 MySqlDataReader myReader2 = command.ExecuteReader();
                 
+                /*
                 // Print Results to Console                
                 while (myReader2.Read())
                 {
@@ -102,6 +105,7 @@ namespace MiniPro
                         row += myReader2.GetValue(i).ToString() + ", ";
                     Console.WriteLine(row);
                 }
+                */
 
                 // Close reader
                 myReader2.Close();
@@ -126,7 +130,6 @@ namespace MiniPro
             // Close MySQL Connection
             finally
             {
-                Console.WriteLine("Closing Connection...");
                 if (conn != null)
                 {
                     conn.Close();
@@ -134,6 +137,7 @@ namespace MiniPro
             }
         }
 
+        // Label for slider
         private void distanceVal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             dst = Convert.ToInt32(e.NewValue);        
