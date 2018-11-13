@@ -34,7 +34,6 @@ namespace MiniPro
         // Declarations
         MySqlConnection conn;
         string commandString;
-        MySqlDataAdapter adapter;
         string postcode;
         double longitude;
         double latitude;
@@ -67,6 +66,9 @@ namespace MiniPro
                 // Assign postcode string from postcodeBox
                 // This needs error handling.. somehow xD
                 postcode = postcodeBox.Text;
+                // Replace spaces in postcode with blank spaces.
+                // this is commented out for now, having trouble updating the database.
+                // postcode = postcode .Replace(" " , "");
 
                 // Assign command string - Take postcode, get long and lat
                 commandString = "SELECT longitude, latitude FROM postcodes WHERE postcode='" + postcode + "';";
@@ -89,6 +91,7 @@ namespace MiniPro
 
 
                 // Query string for user entered postcode
+                // ROUND might be causing problems here. might need editing to fix it.
                 commandString2 = "SELECT s.*, ROUND(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ), 2 ) AS 'distance' FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < " + dst + " ORDER BY distance";
 
                 // Set command using commandString2
@@ -115,8 +118,9 @@ namespace MiniPro
                 DataTable dt = new DataTable();
                 MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
                 da.Fill(dt);
-                dataGrid1.DataContext = dt;         
+                dataGrid1.DataContext = dt;
                 
+
 
             }
             
