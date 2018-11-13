@@ -14,6 +14,5 @@
         <TextBox Text="{Binding ElementName=distanceVal, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Center" Margin="479,374,269,19" />
         <Slider Maximum="50" TickPlacement="BottomRight" TickFrequency="1"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" Margin="43,376,0,0" VerticalAlignment="Top" Width="421" Name="distanceVal" ValueChanged="distanceVal_ValueChanged" Value="10"/>
         <Label Content="Distance" HorizontalAlignment="Left" Margin="203,345,0,0" VerticalAlignment="Top" />
-
     </Grid>
 </Window>
