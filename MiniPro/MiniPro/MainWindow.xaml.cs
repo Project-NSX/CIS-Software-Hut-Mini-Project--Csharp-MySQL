@@ -59,6 +59,7 @@ namespace MiniPro
                 postcode = postcodeBox.Text;
                 // Replace whitespaces with null
                 postcode = postcode.Replace(" ", "");
+                postcode = postcode.Replace("-", "");
 
                 // Assign command string - Take postcode, get long and lat
                 commandString = "SELECT longitude, latitude FROM postcodes WHERE postcode='" + postcode + "';";
