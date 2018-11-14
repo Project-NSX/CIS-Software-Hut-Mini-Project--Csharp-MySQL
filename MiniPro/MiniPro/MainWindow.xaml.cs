@@ -57,6 +57,7 @@ namespace MiniPro
                 // Assign postcode string from postcodeBox
                 // This needs error handling.. somehow xD
                 postcode = postcodeBox.Text;
+                // Replace whitespaces with null
                 postcode = postcode.Replace(" ", "");
 
                 // Assign command string - Take postcode, get long and lat
