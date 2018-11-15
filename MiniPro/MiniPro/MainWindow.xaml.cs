@@ -23,15 +23,16 @@ namespace MiniPro
     {
         // TODO
         // Error Checking for postcode
-            // Text box restrictions
-            // postcode specifications stuff
-            // Change method names and value's to Upper case first character
-            // Change into OOP
+        // Text box restrictions
+        // postcode specifications stuff
+        // Change method names and value's to Upper case first character
+        // Change into OOP
         // Checkboxes
         // Age
         // 
 
         // Declarations
+        Properties.Settings settings = Properties.Settings.Default;
         MySqlConnection conn;
         string commandString;
         string postcode;
@@ -51,10 +52,12 @@ namespace MiniPro
         {
 
             // Assigning Connection String
-            string connectionString = "server=localhost;user id=root;password=MyNewPass;database=mini_project";
+            string connectionString = "server=" + settings.mysql_server + ";"
+                                      + "user id=" + settings.mysql_user + ";"
+                                      + "password=" + settings.mysql_pass + ";"
+                                      + "database=" + settings.mysql_database;
             // Link connection to connection string
             conn = new MySqlConnection(connectionString);
-
             MySqlCommand command = conn.CreateCommand();
 
             try
@@ -82,8 +85,8 @@ namespace MiniPro
                 // If reader is running, assign long and lat to local variables
                 if (myReader.Read())
                 {
-                    longitude = (double)myReader[0];
-                    latitude = (double)myReader[1];
+                    longitude = (double) myReader[0];
+                    latitude = (double) myReader[1];
                 }
 
                 // Close Reader
