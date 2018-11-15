@@ -28,6 +28,7 @@ namespace MiniPro
             // Change method names and value's to Upper case first character
             // Change into OOP
         // Checkboxes
+        // do more stuff
         // Age
         // 
 
