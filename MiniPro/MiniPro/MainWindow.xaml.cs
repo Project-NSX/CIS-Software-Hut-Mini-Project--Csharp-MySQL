@@ -21,10 +21,20 @@ namespace MiniPro
 {
     public partial class MainWindow : Window
     {
+        // TODO
+        // Error Checking for postcode
+        // Text box restrictions
+        // postcode specifications stuff
+        // Change method names and value's to Upper case first character
+        // Change into OOP
+        // Checkboxes
+        // Age
+        // 
+
         // Declarations
+        Properties.Settings settings = Properties.Settings.Default;
         MySqlConnection conn;
         string commandString;
-        MySqlDataAdapter adapter;
         string postcode;
         double longitude;
         double latitude;
@@ -42,10 +52,12 @@ namespace MiniPro
         {
 
             // Assigning Connection String
-            string connectionString = "server=localhost;user id=root;password=MyNewPass;database=mini_project";
+            string connectionString = "server=" + settings.mysql_server + ";"
+                                      + "user id=" + settings.mysql_user + ";"
+                                      + "password=" + settings.mysql_pass + ";"
+                                      + "database=" + settings.mysql_database;
             // Link connection to connection string
             conn = new MySqlConnection(connectionString);
-
             MySqlCommand command = conn.CreateCommand();
 
             try
@@ -57,9 +69,9 @@ namespace MiniPro
                 // Assign postcode string from postcodeBox
                 // This needs error handling.. somehow xD
                 postcode = postcodeBox.Text;
-                // Replace whitespaces with null
-                postcode = postcode.Replace(" ", "");
-                postcode = postcode.Replace("-", "");
+                // Replace spaces in postcode with blank spaces.
+                // this is commented out for now, having trouble updating the database.
+                // postcode = postcode .Replace(" " , "");
 
                 // Assign command string - Take postcode, get long and lat
                 commandString = "SELECT longitude, latitude FROM postcodes WHERE postcode='" + postcode + "';";
@@ -73,8 +85,8 @@ namespace MiniPro
                 // If reader is running, assign long and lat to local variables
                 if (myReader.Read())
                 {
-                    longitude = (double)myReader[0];
-                    latitude = (double)myReader[1];
+                    longitude = (double) myReader[0];
+                    latitude = (double) myReader[1];
                 }
 
                 // Close Reader
@@ -82,13 +94,15 @@ namespace MiniPro
 
 
                 // Query string for user entered postcode
-                commandString2 = "SELECT s.*, ROUND(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < " + dst + " ORDER BY distance ASC;";
+                // ROUND might be causing problems here. might need editing to fix it.
+                commandString2 = "SELECT s.*, ROUND(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ), 2 ) AS 'distance' FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < " + dst + " ORDER BY distance";
 
                 // Set command using commandString2
                 command.CommandText = commandString2;
                 // Open new reader
                 MySqlDataReader myReader2 = command.ExecuteReader();
                 
+                /*
                 // Print Results to Console                
                 while (myReader2.Read())
                 {
@@ -97,18 +111,19 @@ namespace MiniPro
                         row += myReader2.GetValue(i).ToString() + ", ";
                     Console.WriteLine(row);
                 }
+                */
 
                 // Close reader
                 myReader2.Close();
 
-                // Push results to datgrid (LONG + LAT)
+                // Push results to datgrid 
                 MySqlCommand cmdSel = new MySqlCommand(commandString2, conn);
                 DataTable dt = new DataTable();
                 MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
                 da.Fill(dt);
                 dataGrid1.DataContext = dt;
-
                 
+
 
             }
             
@@ -122,7 +137,6 @@ namespace MiniPro
             // Close MySQL Connection
             finally
             {
-                Console.WriteLine("Closing Connection...");
                 if (conn != null)
                 {
                     conn.Close();
@@ -130,6 +144,7 @@ namespace MiniPro
             }
         }
 
+        // Label for slider
         private void distanceVal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             dst = Convert.ToInt32(e.NewValue);        

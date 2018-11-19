@@ -1,7 +1,18 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MiniPro.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="mysql_user" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">root</Value>
+    </Setting>
+    <Setting Name="mysql_pass" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MyNewPass</Value>
+    </Setting>
+    <Setting Name="mysql_database" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">mini_project</Value>
+    </Setting>
+    <Setting Name="mysql_server" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
