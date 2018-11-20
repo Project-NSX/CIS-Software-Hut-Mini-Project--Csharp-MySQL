@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MiniPro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" MinWidth="800" MinHeight="450" MaxWidth="800" MaxHeight="450">
-    <Grid Width="792" Height="419" MinWidth="792" MinHeight="419">
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
         <TextBox Name="postcodeBox" HorizontalAlignment="Left" Height="24" Margin="79,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152"/>
         <Label Content="Postcode" HorizontalAlignment="Left" Height="24" Margin="10,297,0,0" VerticalAlignment="Top" Width="69"/>
         <Button x:Name="BtnPostcode" Content="Run" HorizontalAlignment="Left" Height="35" Margin="253,297,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
         <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="255" Margin="32,28,0,0" VerticalAlignment="Top" Width="729"/>
+        <DataGrid Name="dataGrid2" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="81" VerticalAlignment="Top" Width="237" Margin="524,288,0,0"/>
         <TextBox Text="{Binding ElementName=distanceVal, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Center" Margin="479,374,269,19" />
-        <Slider Maximum="50" TickPlacement="BottomRight" TickFrequency="1"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" Margin="43,376,0,0" VerticalAlignment="Top" Width="421" Name="distanceVal" ValueChanged="distanceVal_ValueChanged" Value="10"/>
+        <Slider Maximum="50" TickPlacement="BottomRight" TickFrequency="1"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" Margin="43,376,0,0" VerticalAlignment="Top" Width="421" Name="distanceVal" ValueChanged="distanceVal_ValueChanged"/>
         <Label Content="Distance" HorizontalAlignment="Left" Margin="203,345,0,0" VerticalAlignment="Top" />
+
     </Grid>
 </Window>

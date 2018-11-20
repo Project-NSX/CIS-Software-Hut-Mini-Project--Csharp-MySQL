@@ -33,7 +33,7 @@ namespace MiniPro
 
         public MainWindow()
         {
-            InitializeComponent();
+            
         }
        
 
