@@ -41,6 +41,7 @@ namespace MiniPro
         double latitude;
         string commandString2;
         int dst;
+        double unitMulti;
 
         public MainWindow()
         {
@@ -92,10 +93,17 @@ namespace MiniPro
 
                 // Close Reader
                 myReader.Close();
-
+                if ((bool)miles.IsChecked)
+                {
+                    unitMulti  = 3958.756;
+                }
+                else if ((bool)km.IsChecked)
+                {
+                    unitMulti = 6371.0002161;
+                }
 
                 // Query string for user entered postcode
-                commandString2 = "SELECT s.*, ROUND(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < " + dst + " ORDER BY distance ASC;";
+                commandString2 = "SELECT s.*, ROUND(( " + unitMulti + " * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < " + dst + " ORDER BY distance ASC;";
 
                 // Set command using commandString2
                 command.CommandText = commandString2;
