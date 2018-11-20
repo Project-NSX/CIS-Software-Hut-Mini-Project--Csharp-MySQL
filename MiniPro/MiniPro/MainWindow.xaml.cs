@@ -108,6 +108,8 @@ namespace MiniPro
                 }
 
                 // Query string for user entered postcode
+                // Somehow we need to get this to display the string MilesOrKm either in the distance column name or in the column itself.
+                // Attempts we've made so far messes up the ordering
                 commandString2 = "SELECT s.*, ROUND(( " + unitMulti + " * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < " + dst + " ORDER BY distance ASC;";
 
                 // Set command using commandString2
