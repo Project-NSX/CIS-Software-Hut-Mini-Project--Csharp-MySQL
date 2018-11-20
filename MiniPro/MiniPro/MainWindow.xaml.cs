@@ -42,6 +42,7 @@ namespace MiniPro
         string commandString2;
         int dst;
         double unitMulti;
+        string MilesOrKm;
 
         public MainWindow()
         {
@@ -93,13 +94,17 @@ namespace MiniPro
 
                 // Close Reader
                 myReader.Close();
+
+                // If Miles or Km is checked.
                 if ((bool)miles.IsChecked)
                 {
                     unitMulti  = 3958.756;
+                    MilesOrKm = "Miles";
                 }
                 else if ((bool)km.IsChecked)
                 {
                     unitMulti = 6371.0002161;
+                    MilesOrKm = "Kilometers";
                 }
 
                 // Query string for user entered postcode
@@ -151,6 +156,7 @@ namespace MiniPro
             }
         }
 
+        // Slider bar 
         private void distanceVal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             dst = Convert.ToInt32(e.NewValue);        
