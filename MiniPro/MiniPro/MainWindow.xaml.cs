@@ -21,7 +21,18 @@ namespace MiniPro
 {
     public partial class MainWindow : Window
     {
+        // TODO
+        // Error Checking for postcode
+            // Text box restrictions
+            // postcode specifications stuff
+            // Change method names and value's to Upper case first character
+            // Change into OOP
+        // Checkboxes
+        // Age
+        // 
+
         // Declarations
+        Properties.Settings settings = Properties.Settings.Default;
         MySqlConnection conn;
         string commandString;
         MySqlDataAdapter adapter;
@@ -30,6 +41,8 @@ namespace MiniPro
         double latitude;
         string commandString2;
         int dst;
+        double unitMulti;
+        string unit;
 
         public MainWindow()
         {
@@ -42,10 +55,12 @@ namespace MiniPro
         {
 
             // Assigning Connection String
-            string connectionString = "server=localhost;user id=root;password=MyNewPass;database=mini_project";
+            string connectionString = "server=" + settings.mysql_server + ";"
+                                      + "user id=" + settings.mysql_user + ";"
+                                      + "password=" + settings.mysql_pass + ";"
+                                      + "database=" + settings.mysql_database;
             // Link connection to connection string
             conn = new MySqlConnection(connectionString);
-
             MySqlCommand command = conn.CreateCommand();
 
             try
@@ -73,17 +88,26 @@ namespace MiniPro
                 // If reader is running, assign long and lat to local variables
                 if (myReader.Read())
                 {
-                    longitude = (double)myReader[0];
-                    latitude = (double)myReader[1];
+                    longitude = (double) myReader[0];
+                    latitude = (double) myReader[1];
                 }
 
                 // Close Reader
                 myReader.Close();
-
+                
+                if ((bool)miles.IsChecked)
+                {
+                    unitMulti  = 3958.756;
+                    unit = "Miles";
+                }
+                else if ((bool)km.IsChecked)
+                {
+                    unitMulti = 6371.0002161;
+                    unit = "Km";
+                }
 
                 // Query string for user entered postcode
-                commandString2 = "SELECT s.*, ROUND(( 3958.756 * acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance FROM postcodes p, services s WHERE p.postcode = s.postcode HAVING distance < " + dst + " ORDER BY distance ASC;";
-
+                commandString2 = "SELECT c.categoryName, s.serviceName, CONCAT(s.street, ', ', s.city, ', ', s.postcode) AS Address, s.telNo, ROUND((" + unitMulti + "* acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance" + unit + " FROM postcodes p, services s, categories c WHERE p.postcode = s.postcode AND c.categoryID = s.categoryID HAVING distance" + unit + "<  " + dst + " ORDER BY distanceMiles ASC;";
                 // Set command using commandString2
                 command.CommandText = commandString2;
                 // Open new reader
