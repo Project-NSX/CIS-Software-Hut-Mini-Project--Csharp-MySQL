@@ -107,7 +107,7 @@ namespace MiniPro
                 }
 
                 // Query string for user entered postcode
-                commandString2 = "SELECT c.categoryName, s.serviceName, CONCAT(s.street, ', ', s.city, ', ', s.postcode) AS Address, s.telNo, ROUND((" + unitMulti + "* acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS distance" + unit + " FROM postcodes p, services s, categories c WHERE p.postcode = s.postcode AND c.categoryID = s.categoryID HAVING distance" + unit + "<  " + dst + " ORDER BY distanceMiles ASC;";
+                commandString2 = "SELECT c.categoryName AS 'Service Type', s.serviceName AS 'Service Name', CONCAT(s.street, ', ', s.city, ', ', s.postcode) AS Address, s.telNo AS 'Telephone Number', ROUND((" + unitMulti + "* acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS Distance" + unit + " FROM postcodes p, services s, categories c WHERE p.postcode = s.postcode AND c.categoryID = s.categoryID HAVING Distance" + unit + "<  " + dst + " ORDER BY Distance" + unit + " ASC;";
                 // Set command using commandString2
                 command.CommandText = commandString2;
                 // Open new reader
