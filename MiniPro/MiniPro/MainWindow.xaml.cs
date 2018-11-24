@@ -23,10 +23,10 @@ namespace MiniPro
     {
         // TODO
         // Error Checking for postcode
-            // Text box restrictions
-            // postcode specifications stuff
-            // Change method names and value's to Upper case first character
-            // Change into OOP
+        // Text box restrictions
+        // postcode specifications stuff
+        // Change method names and value's to Upper case first character
+        // Change into OOP
         // Checkboxes
         // Age
         // 
@@ -43,12 +43,15 @@ namespace MiniPro
         int dst;
         double unitMulti;
         string unit;
+        string commandString3;
+        
 
         public MainWindow()
         {
-            
+
+
         }
-       
+
 
         // Postcode button Click
         private void BtnPostcode_Click(object sender, RoutedEventArgs e)
@@ -68,7 +71,7 @@ namespace MiniPro
 
                 //Open connecting using conn.
                 conn.Open();
-                
+
                 // Assign postcode string from postcodeBox
                 // This needs error handling.. somehow xD
                 postcode = postcodeBox.Text;
@@ -88,16 +91,16 @@ namespace MiniPro
                 // If reader is running, assign long and lat to local variables
                 if (myReader.Read())
                 {
-                    longitude = (double) myReader[0];
-                    latitude = (double) myReader[1];
+                    longitude = (double)myReader[0];
+                    latitude = (double)myReader[1];
                 }
 
                 // Close Reader
                 myReader.Close();
-                
+
                 if ((bool)miles.IsChecked)
                 {
-                    unitMulti  = 3958.756;
+                    unitMulti = 3958.756;
                     unit = "Miles";
                 }
                 else if ((bool)km.IsChecked)
@@ -112,7 +115,7 @@ namespace MiniPro
                 command.CommandText = commandString2;
                 // Open new reader
                 MySqlDataReader myReader2 = command.ExecuteReader();
-                
+
                 // Print Results to Console                
                 while (myReader2.Read())
                 {
@@ -132,10 +135,10 @@ namespace MiniPro
                 da.Fill(dt);
                 dataGrid1.DataContext = dt;
 
-                
+
 
             }
-            
+
             //MySQL Error Handling
             catch (MySqlException ex)
             {
@@ -156,9 +159,146 @@ namespace MiniPro
 
         private void distanceVal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            dst = Convert.ToInt32(e.NewValue);        
+            dst = Convert.ToInt32(e.NewValue);
         }
 
-        
+
+
+        private void categoryBox(object sender, RoutedEventArgs e)
+        {
+            // EVERYTHING IN MainWindow (atm) Prints the categories to ListBox...
+            // This will change to OOP sometime soon
+            try
+            {
+                // Assigning Connection String
+                string connectionString = "server=" + settings.mysql_server + ";"
+                                          + "user id=" + settings.mysql_user + ";"
+                                          + "password=" + settings.mysql_pass + ";"
+                                          + "database=" + settings.mysql_database;
+
+                conn = new MySqlConnection(connectionString);
+                // Link connection to command to get services list
+                MySqlCommand command2 = conn.CreateCommand();
+                //Open connecting using conn.
+                conn.Open();
+
+                // GET CATEGORIES
+                // Set command string for getting catagories
+                commandString3 = "SELECT categoryName FROM categories;";
+                // Set command using commandString3
+                command2.CommandText = commandString3;
+                // Create new reader
+                //MySqlDataReader myReader3 = command2.ExecuteReader();
+                // Print catagories to console
+
+
+                MySqlDataReader myReader3 = command2.ExecuteReader();
+
+                // Open reader, while reader is reading....
+                while (myReader3.Read())
+                {
+                    //Print categories to console... This is for testing.
+                    string row = "";
+                    for (int i = 0; i < myReader3.FieldCount; i++)
+                        row += myReader3.GetValue(i).ToString();
+                    Console.WriteLine(row);
+                    // Populate listBox with categories
+                    ListBox1.Items.Add((string)myReader3[0]);
+
+                }
+
+
+            }
+
+            //MySQL Error Handling
+            catch (MySqlException ex)
+            {
+                Console.Error.WriteLine("Error: {0}", ex.ToString());
+                conn = null;
+            }
+
+            // Close MySQL Connection
+            finally
+            {
+                Console.WriteLine("Closing Connection...");
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+
+            // WORK IN PROGRESS
+
+        }
+
+        private void categoryBox1(object sender, RoutedEventArgs e)
+        {
+            ListViewItem n = new ListViewItem();
+
+            // EVERYTHING IN MainWindow (atm) Prints the categories to ListView...
+            // This will change to OOP sometime soon
+            try
+            {
+                // Assigning Connection String
+                string connectionString = "server=" + settings.mysql_server + ";"
+                                          + "user id=" + settings.mysql_user + ";"
+                                          + "password=" + settings.mysql_pass + ";"
+                                          + "database=" + settings.mysql_database;
+
+                conn = new MySqlConnection(connectionString);
+                // Link connection to command to get services list
+                MySqlCommand command2 = conn.CreateCommand();
+                //Open connecting using conn.
+                conn.Open();
+
+                // GET CATEGORIES
+                // Set command string for getting catagories
+                commandString3 = "SELECT categoryName FROM categories;";
+                // Set command using commandString3
+                command2.CommandText = commandString3;
+                // Create new reader
+                //MySqlDataReader myReader3 = command2.ExecuteReader();
+                // Print catagories to console
+
+
+                MySqlDataReader myReader3 = command2.ExecuteReader();
+
+                // Open reader, while reader is reading....
+                while (myReader3.Read())
+                {
+                    //Print categories to console... This is for testing.
+                    string row = "";
+                    for (int i = 0; i < myReader3.FieldCount; i++)
+                        row += myReader3.GetValue(i).ToString();
+                    Console.WriteLine(row);
+                    // Populate listView with categories
+
+                    ListView1.Items.Add((string)myReader3[0]);
+
+                    // THIS NEEDS TO BE A SUB ITEM!
+                    ListView1.Items.Add((string)"Sub Item Here");
+
+                }
+            }
+
+            //MySQL Error Handling
+            catch (MySqlException ex)
+            {
+                Console.Error.WriteLine("Error: {0}", ex.ToString());
+                conn = null;
+            }
+
+            // Close MySQL Connection
+            finally
+            {
+                Console.WriteLine("Closing Connection...");
+                if (conn != null)
+                {
+                    conn.Close();
+                }
+            }
+
+        }
     }
 }
