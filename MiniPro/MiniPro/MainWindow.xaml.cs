@@ -163,75 +163,9 @@ namespace MiniPro
         }
 
 
-
-        private void categoryBox(object sender, RoutedEventArgs e)
-        {
-            // EVERYTHING IN MainWindow (atm) Prints the categories to ListBox...
-            // This will change to OOP sometime soon
-            try
-            {
-                // Assigning Connection String
-                string connectionString = "server=" + settings.mysql_server + ";"
-                                          + "user id=" + settings.mysql_user + ";"
-                                          + "password=" + settings.mysql_pass + ";"
-                                          + "database=" + settings.mysql_database;
-
-                conn = new MySqlConnection(connectionString);
-                // Link connection to command to get services list
-                MySqlCommand command2 = conn.CreateCommand();
-                //Open connecting using conn.
-                conn.Open();
-
-                // GET CATEGORIES
-                // Set command string for getting catagories
-                commandString3 = "SELECT categoryName FROM categories;";
-                // Set command using commandString3
-                command2.CommandText = commandString3;
-                // Create new reader
-                //MySqlDataReader myReader3 = command2.ExecuteReader();
-                // Print catagories to console
-
-
-                MySqlDataReader myReader3 = command2.ExecuteReader();
-
-                // Open reader, while reader is reading....
-                while (myReader3.Read())
-                {
-                    //Print categories to console... This is for testing.
-                    string row = "";
-                    for (int i = 0; i < myReader3.FieldCount; i++)
-                        row += myReader3.GetValue(i).ToString();
-                    Console.WriteLine(row);
-                    // Populate listBox with categories
-                    ListBox1.Items.Add((string)myReader3[0]);
-
-                }
-
-
-            }
-
-            //MySQL Error Handling
-            catch (MySqlException ex)
-            {
-                Console.Error.WriteLine("Error: {0}", ex.ToString());
-                conn = null;
-            }
-
-            // Close MySQL Connection
-            finally
-            {
-                Console.WriteLine("Closing Connection...");
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-            }
-
-
             // WORK IN PROGRESS
 
-        }
-
+       
         private void categoryBox1(object sender, RoutedEventArgs e)
         {
             ListViewItem n = new ListViewItem();

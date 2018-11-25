@@ -17,9 +17,8 @@
         <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="15,186,916,210" IsChecked="True"/>
         <RadioButton x:Name="km" GroupName="unit" Content="Km" Margin="95,186,857,209" />
         <!-- ListBox works-->
-        <ListBox x:Name="ListBox1" HorizontalAlignment="Left" Height="190" Margin="1014,19,0,0" VerticalAlignment="Top" Width="145" Loaded="categoryBox" />
         <!-- Attempt to get listView to work with data-->
-        <ListView x:Name="ListView1" HorizontalAlignment="Left" Height="186" Margin="1014,214,0,0" VerticalAlignment="Top" Width="145" Loaded="categoryBox1" >
+        <ListView x:Name="ListView1" HorizontalAlignment="Left" Height="190" Margin="1005,19,0,0" VerticalAlignment="Top" Width="165" Loaded="categoryBox1" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
