@@ -18,22 +18,7 @@
         <RadioButton x:Name="km" GroupName="unit" Content="Km" Margin="95,186,857,209" />
         <!-- ListBox works-->
         <!-- Attempt to get listView to work with data-->
-        <ListView x:Name="ListView1" HorizontalAlignment="Left" Height="190" Margin="1005,19,0,0" VerticalAlignment="Top" Width="165" Loaded="categoryBox1" >
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                    
-                    <!--
-                    This is the second column, still not able to addd sub items though
-                   -->
-                    
-                    <GridViewColumn/>
-                      
-                    
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="175" Margin="1005,225,0,0" VerticalAlignment="Top" Width="165" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
+        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="250" Margin="1010,19,0,0" VerticalAlignment="Top" Width="164" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged" Loaded="LoadCategories"/>
 
     </Grid>
 </Window>

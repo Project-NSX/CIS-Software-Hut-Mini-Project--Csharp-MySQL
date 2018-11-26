@@ -26,7 +26,6 @@ namespace MiniPro
         Properties.Settings settings = Properties.Settings.Default;
         MySqlConnection conn;
         string commandString;
-        MySqlDataAdapter adapter;
         string postcode;
         double longitude;
         double latitude;
@@ -35,24 +34,27 @@ namespace MiniPro
         double unitMulti;
         string unit;
         string commandString3;
+        string selectedCategories;
+        string selectedCategoriesString;
+
         
         public MainWindow()
         {
-            
+            // Assigning Connection String
+            string connectionString = "server=" + settings.mysql_server + ";"
+                                      + "user id=" + settings.mysql_user + ";"
+                                      + "password=" + settings.mysql_pass + ";"
+                                      + "database=" + settings.mysql_database;
+
+            conn = new MySqlConnection(connectionString);
         }
         
         // Postcode button Click
         private void BtnPostcode_Click(object sender, RoutedEventArgs e)
         {
 
-            // Assigning Connection String
-            string connectionString = "server=" + settings.mysql_server + ";"
-                                      + "user id=" + settings.mysql_user + ";"
-                                      + "password=" + settings.mysql_pass + ";"
-                                      + "database=" + settings.mysql_database;
-            // Link connection to connection string
-            conn = new MySqlConnection(connectionString);
             MySqlCommand command = conn.CreateCommand();
+
 
             try
             {
@@ -143,26 +145,21 @@ namespace MiniPro
             }
         }
 
+        // Distance slider method
         private void distanceVal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             dst = Convert.ToInt32(e.NewValue);
         }
         
-        private void categoryBox1(object sender, RoutedEventArgs e)
-        {
-            ListViewItem n = new ListViewItem();
 
-            // EVERYTHING IN MainWindow (atm) Prints the categories to ListView...
-            // This will change to OOP sometime soon
+
+
+        private void LoadCategories(object sender, RoutedEventArgs e)
+        {
+     
             try
             {
-                // Assigning Connection String
-                string connectionString = "server=" + settings.mysql_server + ";"
-                                          + "user id=" + settings.mysql_user + ";"
-                                          + "password=" + settings.mysql_pass + ";"
-                                          + "database=" + settings.mysql_database;
 
-                conn = new MySqlConnection(connectionString);
                 // Link connection to command to get services list
                 MySqlCommand command2 = conn.CreateCommand();
                 //Open connecting using conn.
@@ -174,9 +171,6 @@ namespace MiniPro
                 // Set command using commandString3
                 command2.CommandText = commandString3;
                 // Create new reader
-                //MySqlDataReader myReader3 = command2.ExecuteReader();
-                // Print catagories to console
-
 
                 MySqlDataReader myReader3 = command2.ExecuteReader();
 
@@ -189,24 +183,8 @@ namespace MiniPro
                         row += myReader3.GetValue(i).ToString();
                     Console.WriteLine(row);
 
-                    // Populate listView with categories
-
-
-                    //Cameron's Code - 
-                    ListViewItem vi = new ListViewItem();
-                    //vi.Content = myReader3.GetString(0);
-
-                   
-
-
-                    ListView1.Items.Add((string)myReader3[0]);
+                    // Add Categories to ListBox
                     ListBoxCategories.Items.Add(myReader3.GetString(0));
-
-                    ListView1.Items.Add(vi);
-                    vi.Content += "Checkbox";
-                    // THIS NEEDS TO BE A SUB ITEM!
-                    //ListView1.Items.Add((string)"Sub Item Here");
-
                 }
             }
 
@@ -226,16 +204,52 @@ namespace MiniPro
                     conn.Close();
                 }
             }
-
         }
 
+        // Categories Selection changed 
         private void ListBoxCategories_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            IList items =  ListBoxCategories.SelectedItems;
-            for (int i = 0; i < items.Count; i++)
+            // Add items to variable called categories
+            IList categories = ListBoxCategories.SelectedItems;
+            
+            // Loop throgh Ilist 
+            for (int i = 0; i < categories.Count; i++)
             {
-                Console.WriteLine(items[i]);
+                
+                //Print category to console
+                Console.WriteLine(categories[i]);
+
+                
+
+                if (i > -1)
+                {
+                    selectedCategories = "'" + categories[i] + "'";
+                }
+
+                /*
+                if (i == 0 && categories.Count > 1)
+                {
+                    selectedCategories = "'" + categories[i] + "', ";
+                }
+                else if (i == 0 && categories.Count <= 1)
+                {
+                    selectedCategories = "'" + categories[i] + "', ";
+                }
+                else if (i != 0)
+                {
+                    selectedCategories += "'" + categories[i] + "', ";
+                }
+                if (i == categories.Count - 1)
+                {
+                    selectedCategories += "'" + categories[i] + "'";
+                }
+                */
+
             }
+
+            // Below is the start point for the test string. Going to get this to add categories to the string then insert it into the main sql statement
+            selectedCategoriesString = "(SELECT categoryName FROM categories WHERE category IN (" + selectedCategories + ")";
+            Console.WriteLine(selectedCategoriesString);
         }
     }
 }
