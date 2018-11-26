@@ -16,21 +16,12 @@ using System.Windows.Shapes;
 using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.Collections;
 
 namespace MiniPro
 {
     public partial class MainWindow : Window
     {
-        // TODO
-        // Error Checking for postcode
-        // Text box restrictions
-        // postcode specifications stuff
-        // Change method names and value's to Upper case first character
-        // Change into OOP
-        // Checkboxes
-        // Age
-        // 
-
         // Declarations
         Properties.Settings settings = Properties.Settings.Default;
         MySqlConnection conn;
@@ -45,14 +36,11 @@ namespace MiniPro
         string unit;
         string commandString3;
         
-
         public MainWindow()
         {
-
-
+            
         }
-
-
+        
         // Postcode button Click
         private void BtnPostcode_Click(object sender, RoutedEventArgs e)
         {
@@ -111,6 +99,7 @@ namespace MiniPro
 
                 // Query string for user entered postcode
                 commandString2 = "SELECT c.categoryName AS 'Service Type', s.serviceName AS 'Service Name', CONCAT(s.street, ', ', s.city, ', ', s.postcode) AS Address, s.telNo AS 'Telephone Number', ROUND((" + unitMulti + "* acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS Distance" + unit + " FROM postcodes p, services s, categories c WHERE p.postcode = s.postcode AND c.categoryID = s.categoryID HAVING Distance" + unit + "<  " + dst + " ORDER BY Distance" + unit + " ASC;";
+                
                 // Set command using commandString2
                 command.CommandText = commandString2;
                 // Open new reader
@@ -134,9 +123,6 @@ namespace MiniPro
                 MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
                 da.Fill(dt);
                 dataGrid1.DataContext = dt;
-
-
-
             }
 
             //MySQL Error Handling
@@ -161,11 +147,7 @@ namespace MiniPro
         {
             dst = Convert.ToInt32(e.NewValue);
         }
-
-
-            // WORK IN PROGRESS
-
-       
+        
         private void categoryBox1(object sender, RoutedEventArgs e)
         {
             ListViewItem n = new ListViewItem();
@@ -206,12 +188,24 @@ namespace MiniPro
                     for (int i = 0; i < myReader3.FieldCount; i++)
                         row += myReader3.GetValue(i).ToString();
                     Console.WriteLine(row);
+
                     // Populate listView with categories
 
-                    ListView1.Items.Add((string)myReader3[0]);
 
+                    //Cameron's Code - 
+                    ListViewItem vi = new ListViewItem();
+                    //vi.Content = myReader3.GetString(0);
+
+                   
+
+
+                    ListView1.Items.Add((string)myReader3[0]);
+                    ListBoxCategories.Items.Add(myReader3.GetString(0));
+
+                    ListView1.Items.Add(vi);
+                    vi.Content += "Checkbox";
                     // THIS NEEDS TO BE A SUB ITEM!
-                    ListView1.Items.Add((string)"Sub Item Here");
+                    //ListView1.Items.Add((string)"Sub Item Here");
 
                 }
             }
@@ -233,6 +227,15 @@ namespace MiniPro
                 }
             }
 
+        }
+
+        private void ListBoxCategories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            IList items =  ListBoxCategories.SelectedItems;
+            for (int i = 0; i < items.Count; i++)
+            {
+                Console.WriteLine(items[i]);
+            }
         }
     }
 }
