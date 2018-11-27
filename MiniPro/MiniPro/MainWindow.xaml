@@ -16,6 +16,11 @@
         <Label Content="Distance" HorizontalAlignment="Left" Margin="15,119,0,0" VerticalAlignment="Top" />
         <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="15,186,916,210" IsChecked="True"/>
         <RadioButton x:Name="km" GroupName="unit" Content="Km" Margin="95,186,857,209" />
+
+        <RadioButton x:Name="nursery" GroupName="age" Content="0-3" Margin="15,246,1125,150" IsChecked="True" Width="60" />
+        <RadioButton x:Name="primary" GroupName="age" Content="4-11" Margin="73,246,1067,149" Width="60" />
+        <RadioButton x:Name="secondary" GroupName="age" Content="12-18" Margin="138,246,1002,149" Width="60" />
+        <RadioButton x:Name="none" GroupName="age" Content="19+" Margin="211,246,929,149" Width="60" />
         <!-- ListBox works-->
         <!-- Attempt to get listView to work with data-->
         <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="250" Margin="1010,19,0,0" VerticalAlignment="Top" Width="164" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged" Loaded="LoadCategories"/>

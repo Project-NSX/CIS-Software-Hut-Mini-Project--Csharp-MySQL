@@ -36,6 +36,7 @@ namespace MiniPro
         string commandString3;
         string selectedCategories;
         string selectedCategoriesString;
+        string age;
 
         
         public MainWindow()
@@ -68,6 +69,7 @@ namespace MiniPro
                 // Replace whitespaces with null
                 postcode = postcode.Replace(" ", "");
                 postcode = postcode.Replace("-", "");
+
 
                 // Assign command string - Take postcode, get long and lat
                 commandString = "SELECT longitude, latitude FROM postcodes WHERE postcode='" + postcode + "';";
@@ -167,7 +169,16 @@ namespace MiniPro
 
                 // GET CATEGORIES
                 // Set command string for getting catagories
-                commandString3 = "SELECT categoryName FROM categories;";
+
+
+                commandString3 = "SELECT categoryName FROM categories;";          //mike's original
+                
+                //commandString3 = "SELECT categoryName FROM categories WHERE categoryID NOT IN(2,3,8);";                      Not to show schools
+
+
+
+
+
                 // Set command using commandString3
                 command2.CommandText = commandString3;
                 // Create new reader
