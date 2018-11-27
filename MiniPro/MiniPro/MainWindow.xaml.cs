@@ -98,7 +98,7 @@ namespace MiniPro
                     unitMulti = 6371.0002161;
                     unit = "Km";
                 }
-
+                
                 // Query string for user entered postcode
                 commandString2 = "SELECT c.categoryName AS 'Service Type', s.serviceName AS 'Service Name', CONCAT(s.street, ', ', s.city, ', ', s.postcode) AS Address, s.telNo AS 'Telephone Number', ROUND((" + unitMulti + "* acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS Distance" + unit + " FROM postcodes p, services s, categories c WHERE c.categoryId IN "+ selectedCategoriesString + " AND p.postcode = s.postcode AND c.categoryID = s.categoryID HAVING Distance" + unit + "<  " + dst + " ORDER BY Distance" + unit + " ASC;";
                 
@@ -171,7 +171,7 @@ namespace MiniPro
                 // Set command using commandString3
                 command2.CommandText = commandString3;
                 // Create new reader
-
+                  
                 MySqlDataReader myReader3 = command2.ExecuteReader();
 
                 // Open reader, while reader is reading....
@@ -186,6 +186,10 @@ namespace MiniPro
                     // Add Categories to ListBox
                     ListBoxCategories.Items.Add(myReader3.GetString(0));
                 }
+                // Below is the start point for the test string. Going to get this to add categories to the string then insert it into the main sql statement
+                selectedCategories = "'*'";
+                selectedCategoriesString = " (SELECT categoryId FROM categories WHERE categoryName IN (" + selectedCategories + "))";
+                Console.WriteLine(selectedCategoriesString);
             }
 
             //MySQL Error Handling
@@ -232,12 +236,13 @@ namespace MiniPro
                 {
                     selectedCategories += "'" + categories[i] + "'";
                 }
-
             }
-
             // Below is the start point for the test string. Going to get this to add categories to the string then insert it into the main sql statement
             selectedCategoriesString = " (SELECT categoryId FROM categories WHERE categoryName IN (" + selectedCategories + "))";
             Console.WriteLine(selectedCategoriesString);
+
+
+
         }
     }
 }
