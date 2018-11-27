@@ -215,27 +215,36 @@ namespace MiniPro
         {
             // Add items to variable called categories
             IList categories = ListBoxCategories.SelectedItems;
-            
-            // Loop throgh Ilist 
-            for (int i = 0; i < categories.Count; i++)
+            if (categories.Count == 0)
             {
-                
-                //Print category to console
-                Console.WriteLine(categories[i]);
+                selectedCategories = "'*'";
+            }
+            else
+            {
+                // Loop throgh Ilist 
+                for (int i = 0; i < categories.Count; i++)
+                {
 
-                
-                if (i == 0)
-                {
-                    selectedCategories = "'" + categories[i] + "'";
+                    //Print category to console
+                    Console.WriteLine(categories[i]);
+
+
+                    if (i == 0)
+                    {
+                        selectedCategories = "'" + categories[i] + "'";
+                    }
+                    else if (i < categories.Count)
+                    {
+                        selectedCategories += ", '" + categories[i] + "'";
+                    }
+                    else if (i == categories.Count)
+                    {
+                        selectedCategories += "'" + categories[i] + "'";
+                    }
                 }
-                else if (i < categories.Count)
-                {
-                    selectedCategories += ", '" + categories[i] + "'";
-                }
-                else if (i == categories.Count)
-                {
-                    selectedCategories += "'" + categories[i] + "'";
-                }
+           
+
+
             }
             // Below is the start point for the test string. Going to get this to add categories to the string then insert it into the main sql statement
             selectedCategoriesString = " (SELECT categoryId FROM categories WHERE categoryName IN (" + selectedCategories + "))";
