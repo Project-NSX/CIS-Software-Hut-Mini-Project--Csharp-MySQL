@@ -8,7 +8,7 @@
         Title="Nearby Patient Services" Height="450" Width="1200" MinWidth="1200" MinHeight="450" MaxWidth="1200" MaxHeight="450">
     <Grid Width="1000" Height="419" MinWidth="1200" MinHeight="419"  MaxWidth="1200" Background="#FF25DA88">
         <Button x:Name="BtnPostcode" Content="Search" HorizontalAlignment="Left" Height="35" Margin="75,366,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
-        <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="381" Margin="279,20,0,0" VerticalAlignment="Top" Width="894" ColumnWidth="SizeToCells"/>
+        <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="381" Margin="279,20,0,0" VerticalAlignment="Top" Width="894" ColumnWidth="*"/>
         <TextBox x:Name="postcodeBox" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" MaxLength="7" CharacterCasing="Upper" TextChanged="postcodeBox_TextChanged" Margin="14,40,0,0"/>
         <Label Content="Postcode" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="69" Margin="14,14,0,0"/>
         <TextBox Text="{Binding Value, ElementName=distanceVal, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" IsEnabled="False" Margin="226,103,930,290" />
