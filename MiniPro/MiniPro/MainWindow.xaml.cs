@@ -268,7 +268,8 @@ namespace MiniPro
 
         private void postcodeBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            postcodeBox.Text = string.Concat(postcodeBox.Text.Where(char.IsLetterOrDigit));
+            postcodeBox.Text = string.Concat(postcodeBox.Text.Where(char.IsLetterOrDigit)));
+
             postcodeBox.SelectionStart = postcodeBox.Text.Length + 1;
         }
     }

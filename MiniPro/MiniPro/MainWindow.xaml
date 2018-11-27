@@ -7,23 +7,23 @@
         mc:Ignorable="d"
         Title="Nearby Patient Services" Height="450" Width="1200" MinWidth="1200" MinHeight="450" MaxWidth="1200" MaxHeight="450">
     <Grid Width="1000" Height="419" MinWidth="1200" MinHeight="419"  MaxWidth="1200" Background="#FF25DA88">
-        <TextBox Name="postcodeBox" HorizontalAlignment="Left" Height="24" Margin="15,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" MaxLength="7" CharacterCasing="Upper" TextChanged="postcodeBox_TextChanged"/>
-        <Label Content="Postcode" HorizontalAlignment="Left" Height="24" Margin="15,63,0,0" VerticalAlignment="Top" Width="69"/>
-        <Button x:Name="BtnPostcode" Content="Search" HorizontalAlignment="Left" Height="35" Margin="72,365,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
-        <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="381" Margin="276,19,0,0" VerticalAlignment="Top" Width="713"/>
-        <TextBox Text="{Binding ElementName=distanceVal, Path=Value, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" TextAlignment="Center" Margin="227,152,929,241" IsEnabled="False" />
-        <Slider Maximum="50" TickPlacement="BottomRight" TickFrequency="1"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" Margin="15,150,0,0" VerticalAlignment="Top" Width="186" Name="distanceVal" ValueChanged="distanceVal_ValueChanged" Value="10"/>
-        <Label Content="Distance" HorizontalAlignment="Left" Margin="15,119,0,0" VerticalAlignment="Top" />
-        <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="15,186,916,210" IsChecked="True"/>
-        <RadioButton x:Name="km" GroupName="unit" Content="Km" Margin="95,186,857,209" />
+        <Button x:Name="BtnPostcode" Content="Search" HorizontalAlignment="Left" Height="35" Margin="75,366,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
+        <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="381" Margin="279,20,0,0" VerticalAlignment="Top" Width="894" ColumnWidth="SizeToCells"/>
+        <TextBox x:Name="postcodeBox" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" MaxLength="7" CharacterCasing="Upper" TextChanged="postcodeBox_TextChanged" Margin="14,40,0,0"/>
+        <Label Content="Postcode" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="69" Margin="14,14,0,0"/>
+        <TextBox Text="{Binding Value, ElementName=distanceVal, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" IsEnabled="False" Margin="226,103,930,290" />
+        <Slider Maximum="50" TickPlacement="BottomRight" TickFrequency="1"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="186" x:Name="distanceVal" ValueChanged="distanceVal_ValueChanged" Value="10" Margin="14,101,0,0"/>
+        <Label Content="Distance" HorizontalAlignment="Left" Margin="14,70,0,0" VerticalAlignment="Top" />
+        <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="14,137,1131,259" IsChecked="True"/>
+        <RadioButton x:Name="km" GroupName="unit" Content="Km" Margin="94,137,1068,258" />
 
-        <RadioButton x:Name="nursery" GroupName="age" Content="0-3" Margin="15,246,1125,150" IsChecked="True" Width="60" />
-        <RadioButton x:Name="primary" GroupName="age" Content="4-11" Margin="73,246,1067,149" Width="60" />
-        <RadioButton x:Name="secondary" GroupName="age" Content="12-18" Margin="138,246,1002,149" Width="60" />
-        <RadioButton x:Name="none" GroupName="age" Content="19+" Margin="211,246,929,149" Width="60" />
+        <RadioButton x:Name="nursery" GroupName="age" Content="0-3" Margin="13,342,1127,54" IsChecked="True" Width="60" />
+        <RadioButton x:Name="primary" GroupName="age" Content="4-11" Margin="71,342,1069,53" Width="60" />
+        <RadioButton x:Name="secondary" GroupName="age" Content="12-18" Margin="136,342,1004,53" Width="60" />
+        <RadioButton x:Name="none" GroupName="age" Content="19+" Margin="209,342,931,53" Width="60" />
         <!-- ListBox works-->
         <!-- Attempt to get listView to work with data-->
-        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="250" Margin="1010,19,0,0" VerticalAlignment="Top" Width="164" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged" Loaded="LoadCategories"/>
+        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="171" Margin="13,161,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged" Loaded="LoadCategories"/>
 
     </Grid>
 </Window>
