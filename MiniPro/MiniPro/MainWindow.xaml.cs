@@ -50,6 +50,7 @@ namespace MiniPro
             conn = new MySqlConnection(connectionString);
         }
         
+
         // Postcode button Click
         private void BtnPostcode_Click(object sender, RoutedEventArgs e)
         {
@@ -173,8 +174,8 @@ namespace MiniPro
 
                 commandString3 = "SELECT categoryName FROM categories;";          //mike's original
                 
-                //commandString3 = "SELECT categoryName FROM categories WHERE categoryID NOT IN(2,3,8);";                      Not to show schools
-
+                //commandString3 = "SELECT categoryName FROM categories WHERE categoryID NOT IN(2,3,8);";                    //  Not to show schools
+                //implement somewher if school and one of radio button is checked 
 
 
 
@@ -263,6 +264,12 @@ namespace MiniPro
 
 
 
+        }
+
+        private void postcodeBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            postcodeBox.Text = string.Concat(postcodeBox.Text.Where(char.IsLetterOrDigit));
+            postcodeBox.SelectionStart = postcodeBox.Text.Length + 1;
         }
     }
 }
