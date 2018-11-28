@@ -55,6 +55,7 @@ namespace MiniPro
             // Create New connection
             conn = new MySqlConnection(connectionString);
             
+ 
         }
         
 
@@ -264,10 +265,8 @@ namespace MiniPro
                 // Loop throgh Ilist 
                 for (int i = 0; i < categories.Count; i++)
                 {
-
                     //Print category to console
                     Console.WriteLine(categories[i]);
-
 
                     if (i == 0)
                     {
@@ -320,7 +319,7 @@ namespace MiniPro
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
             // Initial load of categories causes program to crash
-            //LoadCategories();
+            LoadCategories();
         }
 
         private void PrimaryChecked(object sender, RoutedEventArgs e)
