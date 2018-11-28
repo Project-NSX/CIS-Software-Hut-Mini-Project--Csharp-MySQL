@@ -17,13 +17,13 @@
         <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="14,137,1131,259" IsChecked="True"/>
         <RadioButton x:Name="km" GroupName="unit" Content="Km" Margin="94,137,1068,258" />
 
-        <RadioButton x:Name="nursery" GroupName="age" Content="0-3" Margin="13,342,1127,54" IsChecked="True" Width="60" Checked="NurseryChecked" />
-        <RadioButton x:Name="primary" GroupName="age" Content="4-11" Margin="71,342,1069,53" Width="60" Checked="PrimaryChecked" />
-        <RadioButton x:Name="secondary" GroupName="age" Content="12-18" Margin="136,342,1004,53" Width="60" Checked="SecondaryIsChecked" />
-        <RadioButton x:Name="none" GroupName="age" Content="19+" Margin="209,342,931,53" Width="60" Checked="NoneIsChecked" />
+        <RadioButton x:Name="Nursery" GroupName="age" Content="0-3" Margin="13,342,1127,54" IsChecked="True" Width="60" Checked="NurseryChecked" />
+        <RadioButton x:Name="Primary" GroupName="age" Content="4-11" Margin="71,342,1069,53" Width="60" Checked="PrimaryChecked" />
+        <RadioButton x:Name="Secondary" GroupName="age" Content="12-18" Margin="136,342,1004,53" Width="60" Checked="SecondaryChecked" />
+        <RadioButton x:Name="None" GroupName="age" Content="19+" Margin="209,342,931,53" Width="60" Checked="NoneChecked" />
         <!-- ListBox works-->
         <!-- Attempt to get listView to work with data-->
-        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="171" Margin="13,161,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged" Loaded="LoadCategories"/>
+        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="171" Margin="13,161,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
 
     </Grid>
 </Window>

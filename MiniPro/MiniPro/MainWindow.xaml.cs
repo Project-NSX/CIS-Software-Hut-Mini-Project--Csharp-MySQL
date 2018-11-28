@@ -43,8 +43,6 @@ namespace MiniPro
         string GetCategoryName;
         string selectedCategories;
         string selectedCategoriesString;
-        string age;
-        string ageSelection;
         string ageSelectionQuery;
         
         public MainWindow()
@@ -56,6 +54,7 @@ namespace MiniPro
                                       + "database=" + settings.mysql_database;
 
             conn = new MySqlConnection(connectionString);
+            
         }
         
 
@@ -172,18 +171,22 @@ namespace MiniPro
         {
             dst = Convert.ToInt32(e.NewValue);
         }
-        
 
 
-        // Loaded on start of application
-        private void LoadCategories(object sender, RoutedEventArgs e)
+
+        public void LoadCategories()
         {
 
-
+            if (ListBoxCategories != null)
+            {
+                ListBoxCategories.Items.Clear();
+            }
+            
             // Load categories table
             try
             {
-
+                
+                   
                 // Link connection to command to get services list
                 MySqlCommand command2 = conn.CreateCommand();
                 //Open connecting using conn.
@@ -193,18 +196,14 @@ namespace MiniPro
                 // Set command string for getting catagories
 
 
-                GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";          //mike's original
+                GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";"; 
                 
-                //commandString3 = "SELECT categoryName FROM categories WHERE categoryID NOT IN(2,3,8);";                    //  Not to show schools
-                //implement somewher if school and one of radio button is checked 
-
-
 
 
                 // Set command using commandString3
                 command2.CommandText = GetCategoryName;
                 // Create new reader
-                  
+
                 MySqlDataReader myReader3 = command2.ExecuteReader();
 
                 // Open reader, while reader is reading....
@@ -244,6 +243,7 @@ namespace MiniPro
                 }
             }
         }
+
 
         // Categories Selection changed 
         private void ListBoxCategories_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -309,14 +309,13 @@ namespace MiniPro
             postcodeBox.SelectionStart = postcodeBox.Text.Length + 1;
         }
 
-
-
         private void NurseryChecked(object sender, RoutedEventArgs e)
         {
             ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Secondary', 'School' )";
             GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
+          
         }
 
         private void PrimaryChecked(object sender, RoutedEventArgs e)
@@ -325,24 +324,30 @@ namespace MiniPro
             GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
-            //LoadCategories();
+            LoadCategories();
         }
 
-        private void SecondaryIsChecked(object sender, RoutedEventArgs e)
+        private void SecondaryChecked(object sender, RoutedEventArgs e)
         {
+
             ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Nursery' )";
             GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
-
+            LoadCategories();
         }
 
-        private void NoneIsChecked(object sender, RoutedEventArgs e)
+        private void NoneChecked(object sender, RoutedEventArgs e)
         {
-            ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Nursery', 'Secondary')";
+
+            ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Nursery', 'Secondary', 'School')";
             GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
+            LoadCategories();
         }
+
+
+
     }
 }
