@@ -52,7 +52,7 @@ namespace MiniPro
                                       + "user id=" + settings.mysql_user + ";"
                                       + "password=" + settings.mysql_pass + ";"
                                       + "database=" + settings.mysql_database;
-
+            // Create New connection
             conn = new MySqlConnection(connectionString);
             
         }
@@ -61,7 +61,7 @@ namespace MiniPro
         // Postcode button Click
         private void BtnPostcode_Click(object sender, RoutedEventArgs e)
         {
-
+            // Establish new connection
             MySqlCommand command = conn.CreateCommand();
 
             // Try catch block for returning results
@@ -103,6 +103,7 @@ namespace MiniPro
                 // Close Reader
                 myReader.Close();
 
+                // If Miles is checked unit = In miles, else it's in KM
                 if ((bool)miles.IsChecked)
                 {
                     unitMulti = 3958.756;
@@ -113,6 +114,8 @@ namespace MiniPro
                     unitMulti = 6371.0002161;
                     unit = "Km";
                 }
+
+                // If No categories are selected... Show messagebox asking to select service(s)
                 if (selectedCategories == null)
                 {
                     MessageBox.Show("Please select some services.");
@@ -173,20 +176,20 @@ namespace MiniPro
         }
 
 
-
+        // Method for loading categories into ListBox
         public void LoadCategories()
         {
-
+            // If CategoriesListBox has items in it... Clear the listbox
             if (ListBoxCategories != null)
             {
                 ListBoxCategories.Items.Clear();
             }
-            
+            // Then fill it again...
+
             // Load categories table
             try
             {
-                
-                   
+ 
                 // Link connection to command to get services list
                 MySqlCommand command2 = conn.CreateCommand();
                 //Open connecting using conn.
@@ -250,10 +253,12 @@ namespace MiniPro
         {
             // Add items to variable called categories
             IList categories = ListBoxCategories.SelectedItems;
+            // If Categories has no items selected. Do not loop
             if (categories.Count == 0)
             {
                 selectedCategories = null;
             }
+            // Else loop and add categories to listbox
             else
             {
                 // Loop throgh Ilist 
@@ -279,8 +284,6 @@ namespace MiniPro
                 }
 
 
-
-
                 // If no categories are selected
                 if (selectedCategories == null)
                 {
@@ -293,15 +296,13 @@ namespace MiniPro
 
             }
 
-            // Below is the start point for the test string. Going to get this to add categories to the string then insert it into the main sql statement
+            // Sub query to be inserted into main MySQL Query
             selectedCategoriesString = " (SELECT categoryId FROM categories WHERE categoryName IN (" + selectedCategories + "))";
             Console.WriteLine(selectedCategoriesString);
 
-
-
-
         }
 
+        //TextBox Method - This limits the TextBox for postcodes to only contain letters and numbers
         private void postcodeBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             postcodeBox.Text = string.Concat(postcodeBox.Text.Where(char.IsLetterOrDigit));
@@ -309,13 +310,17 @@ namespace MiniPro
             postcodeBox.SelectionStart = postcodeBox.Text.Length + 1;
         }
 
+        // Age Selection boxes. If LoadCategories is called in the NurseryChecked method the program crashes.... not sure why
+        // Loading categories works in all other methods...  This likely has something to do with the Nursery age being checked by default!
+        // ITEM TO FIX
         private void NurseryChecked(object sender, RoutedEventArgs e)
         {
             ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Secondary', 'School' )";
             GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
-          
+            // Initial load of categories causes program to crash
+            //LoadCategories();
         }
 
         private void PrimaryChecked(object sender, RoutedEventArgs e)
@@ -346,8 +351,6 @@ namespace MiniPro
             Console.WriteLine(GetCategoryName);
             LoadCategories();
         }
-
-
 
     }
 }
