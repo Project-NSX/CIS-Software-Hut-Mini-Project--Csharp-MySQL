@@ -18,6 +18,13 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using System.Collections;
 
+// TO DO
+// GET RADIO BUTTONS WORKING
+//      These should filter the categories list generated.
+// FIT DATAGRID TO FRAME
+// MAKE PROGRAM OOP
+//
+
 namespace MiniPro
 {
     public partial class MainWindow : Window
@@ -33,11 +40,12 @@ namespace MiniPro
         int dst;
         double unitMulti;
         string unit;
-        string commandString3;
+        string GetCategoryName;
         string selectedCategories;
         string selectedCategoriesString;
         string age;
-
+        string ageSelection;
+        string ageSelectionQuery;
         
         public MainWindow()
         {
@@ -57,7 +65,7 @@ namespace MiniPro
 
             MySqlCommand command = conn.CreateCommand();
 
-
+            // Try catch block for returning results
             try
             {
                 
@@ -112,6 +120,7 @@ namespace MiniPro
                     return;
 
                 }
+
                 // Query string for user entered postcode
                 commandString2 = "SELECT c.categoryName AS 'Service Type', s.serviceName AS 'Service Name', CONCAT(s.street, ', ', s.city, ', ', s.postcode) AS Address, s.telNo AS 'Telephone Number', ROUND((" + unitMulti + "* acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS Distance" + unit + " FROM postcodes p, services s, categories c WHERE c.categoryId IN "+ @selectedCategoriesString + " AND p.postcode = s.postcode AND c.categoryID = s.categoryID HAVING Distance" + unit + "<  " + dst + " ORDER BY Distance" + unit + " ASC;";
                 
@@ -166,10 +175,12 @@ namespace MiniPro
         
 
 
-
+        // Loaded on start of application
         private void LoadCategories(object sender, RoutedEventArgs e)
         {
-     
+
+
+            // Load categories table
             try
             {
 
@@ -182,7 +193,7 @@ namespace MiniPro
                 // Set command string for getting catagories
 
 
-                commandString3 = "SELECT categoryName FROM categories;";          //mike's original
+                GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";          //mike's original
                 
                 //commandString3 = "SELECT categoryName FROM categories WHERE categoryID NOT IN(2,3,8);";                    //  Not to show schools
                 //implement somewher if school and one of radio button is checked 
@@ -191,7 +202,7 @@ namespace MiniPro
 
 
                 // Set command using commandString3
-                command2.CommandText = commandString3;
+                command2.CommandText = GetCategoryName;
                 // Create new reader
                   
                 MySqlDataReader myReader3 = command2.ExecuteReader();
@@ -208,10 +219,12 @@ namespace MiniPro
                     // Add Categories to ListBox
                     ListBoxCategories.Items.Add(myReader3.GetString(0));
                 }
-                // Below is the start point for the test string. Going to get this to add categories to the string then insert it into the main sql statement
- 
+
+
+                // Sub query for selected categories
                 selectedCategoriesString = " (SELECT categoryId FROM categories WHERE categoryName IN (" + @selectedCategories + "))";
                 Console.WriteLine(selectedCategoriesString);
+
             }
 
             //MySQL Error Handling
@@ -264,13 +277,26 @@ namespace MiniPro
                         selectedCategories += "'" + categories[i] + "'";
                     }
                 }
-           
+
+
+
+
+                // If no categories are selected
+                if (selectedCategories == null)
+                {
+                    // Show error message
+                    MessageBox.Show("Please select some services.");
+                    return;
+
+                }
 
 
             }
+
             // Below is the start point for the test string. Going to get this to add categories to the string then insert it into the main sql statement
             selectedCategoriesString = " (SELECT categoryId FROM categories WHERE categoryName IN (" + selectedCategories + "))";
             Console.WriteLine(selectedCategoriesString);
+
 
 
 
@@ -281,6 +307,42 @@ namespace MiniPro
             postcodeBox.Text = string.Concat(postcodeBox.Text.Where(char.IsLetterOrDigit));
 
             postcodeBox.SelectionStart = postcodeBox.Text.Length + 1;
+        }
+
+
+
+        private void NurseryChecked(object sender, RoutedEventArgs e)
+        {
+            ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Secondary', 'School' )";
+            GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
+            Console.WriteLine(ageSelectionQuery);
+            Console.WriteLine(GetCategoryName);
+        }
+
+        private void PrimaryChecked(object sender, RoutedEventArgs e)
+        {
+            ageSelectionQuery = "WHERE categoryName NOT IN('Secondary', 'Nursery' )";
+            GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
+            Console.WriteLine(ageSelectionQuery);
+            Console.WriteLine(GetCategoryName);
+            //LoadCategories();
+        }
+
+        private void SecondaryIsChecked(object sender, RoutedEventArgs e)
+        {
+            ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Nursery' )";
+            GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
+            Console.WriteLine(ageSelectionQuery);
+            Console.WriteLine(GetCategoryName);
+
+        }
+
+        private void NoneIsChecked(object sender, RoutedEventArgs e)
+        {
+            ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Nursery', 'Secondary')";
+            GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
+            Console.WriteLine(ageSelectionQuery);
+            Console.WriteLine(GetCategoryName);
         }
     }
 }
