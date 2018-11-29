@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Nearby Patient Services" Height="450" Width="1200" MinWidth="1200" MinHeight="450" MaxWidth="1200" MaxHeight="450">
     <Grid Width="1000" Height="419" MinWidth="1200" MinHeight="419"  MaxWidth="1200" Background="#FF25DA88">
-        <Button x:Name="BtnPostcode" Content="Search" HorizontalAlignment="Left" Height="35" Margin="75,366,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
+        <Button x:Name="BtnPostcode" Content="Search" HorizontalAlignment="Left" Height="35" Margin="72,374,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
         <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="381" Margin="279,20,0,0" VerticalAlignment="Top" Width="894" ColumnWidth="*"/>
         <TextBox x:Name="postcodeBox" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" MaxLength="7" CharacterCasing="Upper" TextChanged="postcodeBox_TextChanged" Margin="14,40,0,0"/>
         <Label Content="Postcode" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="69" Margin="14,14,0,0"/>
@@ -17,13 +17,13 @@
         <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="14,137,1131,259" IsChecked="True"/>
         <RadioButton x:Name="km" GroupName="unit" Content="Km" Margin="94,137,1068,258" />
 
-        <RadioButton x:Name="Nursery" GroupName="age" Content="0-3" Margin="13,342,1127,54" Width="60" Checked="NurseryChecked" />
-        <RadioButton x:Name="Primary" GroupName="age" Content="4-11" Margin="71,342,1069,53" Width="60" Checked="PrimaryChecked" />
-        <RadioButton x:Name="Secondary" GroupName="age" Content="12-18" Margin="136,342,1004,53" Width="60" Checked="SecondaryChecked" />
-        <RadioButton x:Name="None" GroupName="age" Content="19+" Margin="209,342,931,53" Width="60" Checked="NoneChecked" />
+        <RadioButton x:Name="Nursery" GroupName="age" Content="0-3" Margin="14,190,1126,206" Width="60" Checked="NurseryChecked" />
+        <RadioButton x:Name="Primary" GroupName="age" Content="4-11" Margin="72,190,1068,205" Width="60" Checked="PrimaryChecked" />
+        <RadioButton x:Name="Secondary" GroupName="age" Content="12-18" Margin="137,190,1003,205" Width="60" Checked="SecondaryChecked" />
+        <RadioButton x:Name="None" GroupName="age" Content="19+" Margin="210,190,930,205" Width="60" Checked="NoneChecked" />
 
-        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="141" Margin="13,161,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
-        <Label Content="Age" HorizontalAlignment="Left" Margin="10,311,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="151" Margin="13,218,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
+        <Label Content="Age" HorizontalAlignment="Left" Margin="13,160,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

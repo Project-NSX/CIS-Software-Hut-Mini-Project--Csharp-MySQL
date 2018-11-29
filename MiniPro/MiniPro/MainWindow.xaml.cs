@@ -19,11 +19,11 @@ using MySql.Data.MySqlClient;
 using System.Collections;
 
 // TO DO
-// GET RADIO BUTTONS WORKING
-//      These should filter the categories list generated.
 // FIT DATAGRID TO FRAME
+// PREVENT DATAGRID COLUMNS BEING MOVED BY THE USER
+// ADD SELECT ALL / SELECT NONE BUTTONS FOR CATEGORIES
 // MAKE PROGRAM OOP
-//
+// SET KM TO SCALE UP THE SLIDER?
 
 namespace MiniPro
 {
