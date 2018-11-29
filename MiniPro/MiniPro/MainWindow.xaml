@@ -22,7 +22,8 @@
         <RadioButton x:Name="Secondary" GroupName="age" Content="12-18" Margin="136,342,1004,53" Width="60" Checked="SecondaryChecked" />
         <RadioButton x:Name="None" GroupName="age" Content="19+" Margin="209,342,931,53" Width="60" Checked="NoneChecked" />
 
-        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="171" Margin="13,161,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
+        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="141" Margin="13,161,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
+        <Label Content="Age" HorizontalAlignment="Left" Margin="10,311,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
