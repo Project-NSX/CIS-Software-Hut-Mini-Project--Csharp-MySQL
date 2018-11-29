@@ -34,7 +34,7 @@ namespace MiniPro.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MyNewPass")]
+        [global::System.Configuration.DefaultSettingValueAttribute("FQ78EEjRw0kmZODbKIwc")]
         public string mysql_pass {
             get {
                 return ((string)(this["mysql_pass"]));

@@ -6,7 +6,7 @@
       <Value Profile="(Default)">root</Value>
     </Setting>
     <Setting Name="mysql_pass" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">MyNewPass</Value>
+      <Value Profile="(Default)">FQ78EEjRw0kmZODbKIwc</Value>
     </Setting>
     <Setting Name="mysql_database" Type="System.String" Scope="Application">
       <Value Profile="(Default)">mini_project</Value>
