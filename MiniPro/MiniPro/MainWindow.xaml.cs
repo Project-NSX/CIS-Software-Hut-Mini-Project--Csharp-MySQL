@@ -79,9 +79,10 @@ namespace MiniPro
                 postcode = postcode.Replace(" ", "");
                 postcode = postcode.Replace("-", "");
 
+                // If postcode is not entered. Show message box
                 if(postcode == "")
                 {
-                    MessageBox.Show("Please enter a postcode.");
+                    MessageBox.Show("Please enter a postcode");
                     return;
                 }
                 
@@ -115,13 +116,19 @@ namespace MiniPro
                     unitMulti = 6371.0002161;
                     unit = "Km";
                 }
+                
+                // If no age is checked...
+                if (!(bool)Nursery.IsChecked && !(bool)Primary.IsChecked && !(bool)Secondary.IsChecked && !(bool)None.IsChecked)
+                {
+                    MessageBox.Show("Please select an age");
+                    return;
+                }
 
                 // If No categories are selected... Show messagebox asking to select service(s)
                 if (selectedCategories == null)
                 {
-                    MessageBox.Show("Please select some services.");
+                    MessageBox.Show("Please select some services");
                     return;
-
                 }
 
                 // Query string for user entered postcode
@@ -314,7 +321,7 @@ namespace MiniPro
         // ITEM TO FIX
         private void NurseryChecked(object sender, RoutedEventArgs e)
         {
-            ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Secondary', 'School' )";
+            ageSelectionQuery = "WHERE categoryName NOT IN('Primary School', 'Secondary School') ORDER BY categoryName";
             GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
@@ -324,7 +331,7 @@ namespace MiniPro
 
         private void PrimaryChecked(object sender, RoutedEventArgs e)
         {
-            ageSelectionQuery = "WHERE categoryName NOT IN('Secondary', 'Nursery' )";
+            ageSelectionQuery = "WHERE categoryName NOT IN('Secondary School', 'Nursery') ORDER BY categoryName";
             GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
@@ -334,7 +341,7 @@ namespace MiniPro
         private void SecondaryChecked(object sender, RoutedEventArgs e)
         {
 
-            ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Nursery' )";
+            ageSelectionQuery = "WHERE categoryName NOT IN('Primary School', 'Nursery') ORDER BY categoryName";
             GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
@@ -344,7 +351,7 @@ namespace MiniPro
         private void NoneChecked(object sender, RoutedEventArgs e)
         {
 
-            ageSelectionQuery = "WHERE categoryName NOT IN('Primary', 'Nursery', 'Secondary', 'School')";
+            ageSelectionQuery = "WHERE categoryName NOT IN('Primary School', 'Nursery', 'Secondary School')";
             GetCategoryName = "SELECT categoryName FROM categories " + ageSelectionQuery + ";";
             Console.WriteLine(ageSelectionQuery);
             Console.WriteLine(GetCategoryName);
