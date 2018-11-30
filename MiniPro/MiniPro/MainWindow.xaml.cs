@@ -316,9 +316,7 @@ namespace MiniPro
             postcodeBox.SelectionStart = postcodeBox.Text.Length + 1;
         }
 
-        // Age Selection boxes. If LoadCategories is called in the NurseryChecked method the program crashes.... not sure why
-        // Loading categories works in all other methods...  This likely has something to do with the Nursery age being checked by default!
-        // ITEM TO FIX
+        // Age Selection boxes. 
         private void NurseryChecked(object sender, RoutedEventArgs e)
         {
             ageSelectionQuery = "WHERE categoryName NOT IN('Primary School', 'Secondary School') ORDER BY categoryName";
