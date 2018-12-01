@@ -17,15 +17,15 @@
         <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="121,75,1023,327" IsChecked="True"/>
         <RadioButton x:Name="km" GroupName="unit" Content="Kilometers" Margin="181,75,941,327" />
 
-        <RadioButton x:Name="Nursery" GroupName="age" Content="0-3" Margin="15,146,1125,249" Checked="NurseryChecked" />
-        <RadioButton x:Name="Primary" GroupName="age" Content="4-11" Margin="75,146,1065,249" Checked="PrimaryChecked" />
-        <RadioButton x:Name="Secondary" GroupName="age" Content="12-18" Margin="143,146,998,249" Checked="SecondaryChecked" />
-        <RadioButton x:Name="None" GroupName="age" Content="19+" Margin="210,146,931,249" Checked="NoneChecked" />
+        <RadioButton x:Name="Nursery" GroupName="age" Content="0-3" Margin="15,150,1125,253" Checked="NurseryChecked" />
+        <RadioButton x:Name="Primary" GroupName="age" Content="4-11" Margin="75,150,1065,253" Checked="PrimaryChecked" />
+        <RadioButton x:Name="Secondary" GroupName="age" Content="12-18" Margin="143,150,998,253" Checked="SecondaryChecked" />
+        <RadioButton x:Name="None" GroupName="age" Content="19+" Margin="210,150,931,253" Checked="NoneChecked" />
 
-        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="166" Margin="13,175,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
-        <Label Content="Age" HorizontalAlignment="Left" Margin="15,121,0,0" VerticalAlignment="Top" Width="31"/>
-        <Button Content="Select All" HorizontalAlignment="Left" Margin="13,341,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click"/>
-        <Button Content="Select None" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Margin="138,341,0,0" Click="Button_Click_1"/>
+        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="168" Margin="13,178,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
+        <Label Content="Age" HorizontalAlignment="Left" Margin="15,126,0,0" VerticalAlignment="Top" Width="31" Height="30"/>
+        <Button Content="Select All" HorizontalAlignment="Left" Margin="13,346,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click" Height="20"/>
+        <Button Content="Select None" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Margin="138,346,0,0" Click="Button_Click_1" Height="20"/>
 
     </Grid>
 </Window>
