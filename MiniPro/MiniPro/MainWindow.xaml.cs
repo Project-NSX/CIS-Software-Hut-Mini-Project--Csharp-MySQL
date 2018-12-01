@@ -19,11 +19,7 @@ using MySql.Data.MySqlClient;
 using System.Collections;
 
 // TO DO
-// FIT DATAGRID TO FRAME
-// PREVENT DATAGRID COLUMNS BEING MOVED BY THE USER
-// ADD SELECT ALL / SELECT NONE BUTTONS FOR CATEGORIES
 // MAKE PROGRAM OOP
-// SET KM TO SCALE UP THE SLIDER?
 
 namespace MiniPro
 {
@@ -151,12 +147,17 @@ namespace MiniPro
                 // Close reader
                 myReader2.Close();
 
-                // Push results to datgrid (LONG + LAT)
+                // Push results to datgrid
                 MySqlCommand cmdSel = new MySqlCommand(commandString2, conn);
                 DataTable dt = new DataTable();
                 MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
                 da.Fill(dt);
+               
                 dataGrid1.DataContext = dt;
+                dataGrid1.Columns[1].Width = 200;
+                dataGrid1.Columns[2].Width = 280;
+
+
             }
 
             //MySQL Error Handling
@@ -355,6 +356,19 @@ namespace MiniPro
             Console.WriteLine(GetCategoryName);
             LoadCategories();
         }
+        
+        // Button to select all services from ListBox
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+       
+                ListBoxCategories.SelectAll();
+            
+        }
 
+        // Button to deselect all services from listbox
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ListBoxCategories.SelectedItem = null;
+        }
     }
 }
