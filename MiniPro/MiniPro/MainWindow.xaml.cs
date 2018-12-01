@@ -17,6 +17,7 @@ using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 // TO DO
 // MAKE PROGRAM OOP
@@ -78,7 +79,7 @@ namespace MiniPro
                 // If postcode is not entered. Show message box
                 if(postcode == "")
                 {
-                    MessageBox.Show("Please enter a postcode");
+                    MessageBox.Show("Please enter a postcode", "Warning");
                     return;
                 }
                 
@@ -110,20 +111,20 @@ namespace MiniPro
                 else if ((bool)km.IsChecked)
                 {
                     unitMulti = 6371.0002161;
-                    unit = "Km";
+                    unit = "Kilometers";
                 }
                 
                 // If no age is checked...
                 if (!(bool)Nursery.IsChecked && !(bool)Primary.IsChecked && !(bool)Secondary.IsChecked && !(bool)None.IsChecked)
                 {
-                    MessageBox.Show("Please select an age");
+                    MessageBox.Show("Please select an age", "Warning");
                     return;
                 }
 
                 // If No categories are selected... Show messagebox asking to select service(s)
                 if (selectedCategories == null)
                 {
-                    MessageBox.Show("Please select some services");
+                    MessageBox.Show("Please select some services", "Warning");
                     return;
                 }
 
@@ -182,6 +183,7 @@ namespace MiniPro
         private void distanceVal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             dst = Convert.ToInt32(e.NewValue);
+
         }
 
 
@@ -291,14 +293,7 @@ namespace MiniPro
                 }
 
 
-                // If no categories are selected
-                if (selectedCategories == null)
-                {
-                    // Show error message
-                    MessageBox.Show("Please select some services.");
-                    return;
 
-                }
 
 
             }
