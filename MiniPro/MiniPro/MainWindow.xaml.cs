@@ -192,7 +192,7 @@ namespace MiniPro
 
                         dataGrid1.DataContext = dt;
 
-                        dataGrid1.Columns[1].Width = 200;
+                        dataGrid1.Columns[1].Width = 220;
                         dataGrid1.Columns[2].Width = 280;
 
                     }
