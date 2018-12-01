@@ -30,7 +30,7 @@ namespace MiniPro
         Properties.Settings settings = Properties.Settings.Default;
         MySqlConnection conn;
         string commandString;
-        string postcode;
+        string postcodeInput;
         double longitude;
         double latitude;
         string commandString2;
@@ -41,7 +41,8 @@ namespace MiniPro
         string selectedCategories;
         string selectedCategoriesString;
         string ageSelectionQuery;
-        
+        string postcodeVerify;
+
         public MainWindow()
         {
             // Assigning Connection String
@@ -71,20 +72,18 @@ namespace MiniPro
 
                 // Assign postcode string from postcodeBox
                 // This needs error handling.. somehow xD
-                postcode = postcodeBox.Text;
-                // Replace whitespaces with null
-                postcode = postcode.Replace(" ", "");
-                postcode = postcode.Replace("-", "");
+                postcodeInput = postcodeBox.Text;
+
 
                 // If postcode is not entered. Show message box
-                if(postcode == "")
+                if(postcodeInput == "")
                 {
                     MessageBox.Show("Please enter a postcode", "Warning");
                     return;
                 }
                 
                 // Assign command string - Take postcode, get long and lat
-                commandString = "SELECT longitude, latitude FROM postcodes WHERE postcode='" + postcode + "';";
+                commandString = "SELECT longitude, latitude, postcode FROM postcodes WHERE postcode='" + postcodeInput + "';";
 
                 //Assign Command using the commandString declared above
                 command.CommandText = commandString;
@@ -93,15 +92,27 @@ namespace MiniPro
                 MySqlDataReader myReader = command.ExecuteReader();
 
                 // If reader is running, assign long and lat to local variables
+                postcodeVerify = null;
                 if (myReader.Read())
                 {
+                    
                     longitude = (double)myReader[0];
                     latitude = (double)myReader[1];
+                    // Add postcode as variable. This is used to check if the postcode entered is in the table
+                    postcodeVerify = (string)myReader[2];
+                   
                 }
 
                 // Close Reader
                 myReader.Close();
 
+                // Check if returned postcode is null, if it is, show warning then return
+                if (postcodeVerify == null)
+                {
+                    MessageBox.Show("Postcode is not a valid postcode", "Warning");
+                    return;
+                }
+                
                 // If Miles is checked unit = In miles, else it's in KM
                 if ((bool)miles.IsChecked)
                 {
@@ -136,28 +147,46 @@ namespace MiniPro
                 // Open new reader
                 MySqlDataReader myReader2 = command.ExecuteReader();
 
-                // Print Results to Console                
-                while (myReader2.Read())
+                // If reader returns no results. Set datagrid to empty, show messagebox, close reader and return
+                if (!myReader2.Read())
                 {
-                    string row = "";
-                    for (int i = 0; i < myReader2.FieldCount; i++)
-                        row += myReader2.GetValue(i).ToString() + ", ";
-                    Console.WriteLine(row);
+                    dataGrid1.DataContext = null;
+                    MessageBox.Show("No services were found within the distance specified", "Notice");                  
+                    myReader2.Close();
+                    return;
+
                 }
+                else
+                {
 
-                // Close reader
-                myReader2.Close();
 
-                // Push results to datgrid
-                MySqlCommand cmdSel = new MySqlCommand(commandString2, conn);
-                DataTable dt = new DataTable();
-                MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
-                da.Fill(dt);
-               
-                dataGrid1.DataContext = dt;
-                dataGrid1.Columns[1].Width = 200;
-                dataGrid1.Columns[2].Width = 280;
+                    // Print Results to Console                
+                    while (myReader2.Read())
+                    {
+                        string row = "";
+                        for (int i = 0; i < myReader2.FieldCount; i++)
+                            row += myReader2.GetValue(i).ToString() + ", ";
+                        Console.WriteLine(row);
 
+
+                    }
+
+
+                    // Close reader
+                    myReader2.Close();
+
+                    // Push results to datgrid
+                    MySqlCommand cmdSel = new MySqlCommand(commandString2, conn);
+                    DataTable dt = new DataTable();
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmdSel);
+                    da.Fill(dt);
+
+                    dataGrid1.DataContext = dt;
+
+                    dataGrid1.Columns[1].Width = 200;
+                    dataGrid1.Columns[2].Width = 280;
+
+                }
 
             }
 
