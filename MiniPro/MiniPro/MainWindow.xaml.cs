@@ -87,7 +87,9 @@ namespace MiniPro
                     // If postcode is not entered. Show message box
                     if (postcodeInput == "")
                     {
+                        dataGrid1.DataContext = null;
                         MessageBox.Show("Please enter a postcode", "Warning");
+                        conn.Close();
                         return;
                     }
 
@@ -118,7 +120,9 @@ namespace MiniPro
                     // Check if returned postcode is null, if it is, show warning then return
                     if (postcodeVerify == null)
                     {
+                        dataGrid1.DataContext = null;
                         MessageBox.Show("Postcode is not a valid postcode", "Warning");
+                        conn.Close();
                         return;
                     }
 
@@ -138,13 +142,16 @@ namespace MiniPro
                     if (!(bool)Nursery.IsChecked && !(bool)Primary.IsChecked && !(bool)Secondary.IsChecked && !(bool)None.IsChecked)
                     {
                         MessageBox.Show("Please select an age", "Warning");
+                    conn.Close();
                         return;
                     }
 
                     // If No categories are selected... Show messagebox asking to select service(s)
                     if (selectedCategories == null)
                     {
+                        dataGrid1.DataContext = null;
                         MessageBox.Show("Please select some services", "Warning");
+                        conn.Close();
                         return;
                     }
 
@@ -162,7 +169,7 @@ namespace MiniPro
                         dataGrid1.DataContext = null;
                         MessageBox.Show("No services were found within the distance specified", "Notice");
                         myReader2.Close();
-                        return;
+                        
 
                     }
                     else
