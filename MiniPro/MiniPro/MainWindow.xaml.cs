@@ -17,7 +17,7 @@ using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Collections;
-using System.Text.RegularExpressions;
+
 
 // TO DO
 // MAKE PROGRAM OOP
@@ -198,7 +198,7 @@ namespace MiniPro
                         da.Fill(dt);
 
                         dataGrid1.DataContext = dt;
-
+                        // Specifying a couple of column widths to get the grid showing up better
                         dataGrid1.Columns[1].Width = 220;
                         dataGrid1.Columns[2].Width = 280;
 
