@@ -6,26 +6,35 @@
         xmlns:local="clr-namespace:MiniPro"
         mc:Ignorable="d"
         Title="Nearby Patient Services" Height="455" Width="1200" MinWidth="1200" MinHeight="450" MaxWidth="1200" MaxHeight="455">
-    <Grid Width="1000" Height="419" MinWidth="1200" MinHeight="419"  MaxWidth="1200" Background="#FF25DA88">
-        <Button x:Name="BtnPostcode" Content="Search" HorizontalAlignment="Left" Height="35" Margin="73,374,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
-        <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="399" Margin="279,10,0,0" VerticalAlignment="Top" Width="890" ColumnWidth="*" EnableRowVirtualization="False" CanUserResizeColumns="False" CanUserSortColumns="True" CanUserReorderColumns="False" IsReadOnly="True"/>
-        <TextBox x:Name="postcodeBox" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" MaxLength="7" CharacterCasing="Upper" TextChanged="postcodeBox_TextChanged" Margin="14,31,0,0"/>
-        <Label Content="Postcode" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="69" Margin="15,7,0,0"/>
-        <TextBox x:Name="DistanceBox" Text="{Binding Value, ElementName=distanceVal, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" IsEnabled="False" Margin="217,92,939,308" />
-        <Slider Maximum="50" TickPlacement="BottomRight" TickFrequency="1"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" x:Name="distanceVal" ValueChanged="distanceVal_ValueChanged" Value="10" Margin="13,92,0,0"/>
-        <Label Content="Distance" HorizontalAlignment="Left" Margin="14,66,0,0" VerticalAlignment="Top" />
-        <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="121,75,1023,327" IsChecked="True"/>
-        <RadioButton x:Name="km" GroupName="unit" Content="Kilometers" Margin="181,75,941,327" />
+    <Grid Width="1000" Height="444" MinWidth="1200" MinHeight="444"  MaxWidth="1200" Background="#FF25DA88">
+        <Menu Grid.Row="0"  Height="20" VerticalAlignment="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Exit"></MenuItem>
+            </MenuItem>
 
-        <RadioButton x:Name="Nursery" GroupName="age" Content="0-3" Margin="15,150,1125,253" Checked="NurseryChecked" />
-        <RadioButton x:Name="Primary" GroupName="age" Content="4-11" Margin="75,150,1065,253" Checked="PrimaryChecked" />
-        <RadioButton x:Name="Secondary" GroupName="age" Content="12-18" Margin="143,150,998,253" Checked="SecondaryChecked" />
-        <RadioButton x:Name="None" GroupName="age" Content="19+" Margin="210,150,931,253" Checked="NoneChecked" />
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <Button x:Name="BtnPostcode" Content="Search" HorizontalAlignment="Left" Height="35" Margin="73,388,0,0" VerticalAlignment="Top" Width="129" Click="BtnPostcode_Click"/>
+        <DataGrid Name="dataGrid1" ItemsSource="{Binding }" HorizontalAlignment="Left" Height="399" Margin="279,24,0,0" VerticalAlignment="Top" Width="890" ColumnWidth="*" EnableRowVirtualization="False" CanUserResizeColumns="False" CanUserSortColumns="True" CanUserReorderColumns="False" IsReadOnly="True"/>
+        <TextBox x:Name="postcodeBox" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" MaxLength="7" CharacterCasing="Upper" TextChanged="postcodeBox_TextChanged" Margin="14,45,0,0"/>
+        <Label Content="Postcode" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="69" Margin="15,21,0,0"/>
+        <TextBox x:Name="DistanceBox" Text="{Binding Value, ElementName=distanceVal, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" IsEnabled="False" Margin="217,106,939,314" />
+        <Slider Maximum="50" TickPlacement="BottomRight" TickFrequency="1"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" x:Name="distanceVal" ValueChanged="distanceVal_ValueChanged" Value="10" Margin="13,106,0,0"/>
+        <Label Content="Distance" HorizontalAlignment="Left" Margin="14,80,0,0" VerticalAlignment="Top" />
+        <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="121,89,1023,338" IsChecked="True"/>
+        <RadioButton x:Name="km" GroupName="unit" Content="Kilometers" Margin="181,89,941,338" />
 
-        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="168" Margin="13,178,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
-        <Label Content="Age" HorizontalAlignment="Left" Margin="15,126,0,0" VerticalAlignment="Top" Width="31" Height="30"/>
-        <Button Content="Select All" HorizontalAlignment="Left" Margin="13,346,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click" Height="20"/>
-        <Button Content="Select None" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Margin="138,346,0,0" Click="Button_Click_1" Height="20"/>
+        <RadioButton x:Name="Nursery" GroupName="age" Content="0-3" Margin="15,164,1125,257" Checked="NurseryChecked" />
+        <RadioButton x:Name="Primary" GroupName="age" Content="4-11" Margin="75,164,1065,257" Checked="PrimaryChecked" />
+        <RadioButton x:Name="Secondary" GroupName="age" Content="12-18" Margin="143,164,998,257" Checked="SecondaryChecked" />
+        <RadioButton x:Name="None" GroupName="age" Content="19+" Margin="210,164,931,257" Checked="NoneChecked" />
+
+        <ListBox x:Name="ListBoxCategories" HorizontalAlignment="Left" Height="168" Margin="13,192,0,0" VerticalAlignment="Top" Width="256" SelectionMode="Multiple" SelectionChanged="ListBoxCategories_SelectionChanged"/>
+        <Label Content="Age" HorizontalAlignment="Left" Margin="15,140,0,0" VerticalAlignment="Top" Width="31" Height="30"/>
+        <Button Content="Select All" HorizontalAlignment="Left" Margin="13,360,0,0" VerticalAlignment="Top" Width="125" Click="Button_Click" Height="20"/>
+        <Button Content="Select None" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Margin="138,360,0,0" Click="Button_Click_1" Height="20"/>
 
     </Grid>
 </Window>
