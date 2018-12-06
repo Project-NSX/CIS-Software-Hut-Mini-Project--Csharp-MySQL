@@ -152,8 +152,10 @@ namespace MiniPro
                         return;
                     }
 
-                    // Query string for user entered postcode
-                    commandString2 = "SELECT s.serviceName AS 'Service Name', c.categoryName AS 'Service Type', CONCAT(s.street, ', ', s.city, ', ', s.postcode) AS Address, s.telNo AS 'Telephone Number', ROUND((" + unitMulti + "* acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS Distance" + unit + " FROM postcodes p, services s, categories c WHERE c.categoryId IN " + @selectedCategoriesString + " AND p.postcode = s.postcode AND c.categoryID = s.categoryID HAVING Distance" + unit + "<  " + dst + " ORDER BY Distance" + unit + " ASC;";
+                // Query string for user entered postcode
+                // Reference for this is below
+                // https://stormconsultancy.co.uk/blog/development/code-snippets/the-haversine-formula-in-c-and-sql/
+                commandString2 = "SELECT s.serviceName AS 'Service Name', c.categoryName AS 'Service Type', CONCAT(s.street, ', ', s.city, ', ', s.postcode) AS Address, s.telNo AS 'Telephone Number', ROUND((" + unitMulti + "* acos( cos( radians(" + latitude + ") ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(" + longitude + ") ) + sin( radians(" + latitude + ") ) * sin( radians(p.latitude) ) ) ),2) AS Distance" + unit + " FROM postcodes p, services s, categories c WHERE c.categoryId IN " + @selectedCategoriesString + " AND p.postcode = s.postcode AND c.categoryID = s.categoryID HAVING Distance" + unit + "<  " + dst + " ORDER BY Distance" + unit + " ASC;";
 
                     // Set command using commandString2
                     command.CommandText = commandString2;
@@ -235,7 +237,6 @@ namespace MiniPro
         // Distance slider method
         private void distanceVal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            
             dst = Convert.ToInt32(e.NewValue);
 
         }

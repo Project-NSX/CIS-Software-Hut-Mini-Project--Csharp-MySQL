@@ -12,7 +12,7 @@
         <TextBox x:Name="postcodeBox" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" MaxLength="7" CharacterCasing="Upper" TextChanged="postcodeBox_TextChanged" Margin="14,31,0,0"/>
         <Label Content="Postcode" HorizontalAlignment="Left" Height="24" VerticalAlignment="Top" Width="69" Margin="15,7,0,0"/>
         <TextBox x:Name="DistanceBox" Text="{Binding Value, ElementName=distanceVal, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center" IsEnabled="False" Margin="217,92,939,308" />
-        <Slider Maximum="50" TickPlacement="BottomRight" TickFrequency="1"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" x:Name="distanceVal" ValueChanged="distanceVal_ValueChanged" Value="10" Margin="13,92,0,0"/>
+        <Slider Maximum="50" Minimum="1" TickPlacement="BottomRight" TickFrequency="1"  IsSnapToTickEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" x:Name="distanceVal" ValueChanged="distanceVal_ValueChanged" Value="10" Margin="13,92,0,0"/>
         <Label Content="Distance" HorizontalAlignment="Left" Margin="14,66,0,0" VerticalAlignment="Top" />
         <RadioButton x:Name="miles" GroupName="unit" Content="Miles" Margin="121,75,1023,327" IsChecked="True"/>
         <RadioButton x:Name="km" GroupName="unit" Content="Kilometers" Margin="181,75,941,327" />
