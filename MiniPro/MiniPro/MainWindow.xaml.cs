@@ -19,9 +19,6 @@ using MySql.Data.MySqlClient;
 using System.Collections;
 
 
-// TO DO
-// MAKE PROGRAM OOP
-
 namespace MiniPro
 {
     public partial class MainWindow : Window
@@ -238,6 +235,7 @@ namespace MiniPro
         // Distance slider method
         private void distanceVal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            
             dst = Convert.ToInt32(e.NewValue);
 
         }
